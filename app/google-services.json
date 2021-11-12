@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "230210794631",
+    "project_id": "coffee3ae",
+    "storage_bucket": "coffee3ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230210794631:android:d1607d86cf04d147403422",
+        "android_client_info": {
+          "package_name": "com.cuoiky.coffee3ae"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230210794631-tj1nql1e6fi91orltdjdcpmmvj0r6ukt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe9ro_7IrJu2qoDUcjVWMId7kvDxiebsQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230210794631-tj1nql1e6fi91orltdjdcpmmvj0r6ukt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
