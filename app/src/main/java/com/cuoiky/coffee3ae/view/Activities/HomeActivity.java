@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,17 +17,14 @@ import android.widget.FrameLayout;
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.ActivityHomeBinding;
 import com.cuoiky.coffee3ae.databinding.ActivityMainBinding;
+import com.cuoiky.coffee3ae.view.Fragments.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
     private ActivityHomeBinding binding;
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private Toolbar toolbar;
+
     private FragmentManager fragmentManager;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +32,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         View viewRoot = binding.getRoot();
         setContentView(viewRoot);
-        toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.tbar_home);
-//        View view = binding.navHome.getHeaderView(0);
-        setSupportActionBar(toolbar);
+        View view = binding.navHome.getHeaderView(0);
+        setSupportActionBar(binding.tbarHome);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this,binding.homeLayout, binding.tbarHome
@@ -51,6 +48,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         binding.homeLayout.addDrawerListener(drawerToggle);
 
         drawerToggle.syncState();
+
+        fragmentManager = getSupportFragmentManager();
+        FragmentTransaction tranHomeF = fragmentManager.beginTransaction();
+        HomeFragment homeFragment = new HomeFragment();
+        tranHomeF.replace(R.id.home_view, homeFragment);
+        tranHomeF.commit();
+
         binding.navHome.setCheckedItem(R.id.nav_home);
     }
 

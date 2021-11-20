@@ -18,9 +18,12 @@
         <entry key="app/src/main/res/drawable/ic_chart_bar_solid.xml" value="0.3385416666666667" />
         <entry key="app/src/main/res/drawable/ic_home_solid.xml" value="0.3385416666666667" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.3385416666666667" />
+        <entry key="app/src/main/res/drawable/ic_list_alt_regular.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/drawable/ic_noun_logout_1153738.xml" value="0.3385416666666667" />
         <entry key="app/src/main/res/drawable/ic_noun_menu_2768753.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/drawable/ic_noun_table_15899.xml" value="0.3385416666666667" />
+        <entry key="app/src/main/res/drawable/ic_plus_circle_solid.xml" value="0.22395833333333334" />
+        <entry key="app/src/main/res/drawable/ic_rectangle_1.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/drawable/ic_user_circle_solid.xml" value="0.23177083333333334" />
         <entry key="app/src/main/res/drawable/ic_users_solid.xml" value="0.3385416666666667" />
         <entry key="app/src/main/res/drawable/round_corner_categorytext.xml" value="0.16927083333333334" />
@@ -31,6 +34,8 @@
         <entry key="app/src/main/res/layout/addmenu_layout.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/layout/custom_layout_displaycategory.xml" value="0.16510416666666666" />
         <entry key="app/src/main/res/layout/display_category_layout.xml" value="0.16510416666666666" />
+        <entry key="app/src/main/res/layout/fragment_hom.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.17552083333333332" />
         <entry key="app/src/main/res/layout/menu_home_header.xml" value="0.5" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.3223958333333333" />
       </map>
