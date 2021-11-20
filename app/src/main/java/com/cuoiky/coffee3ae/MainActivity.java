@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.cuoiky.coffee3ae.databinding.ActivityMainBinding;
 import com.cuoiky.coffee3ae.model.BanAn;
 import com.cuoiky.coffee3ae.model.ChiTietDonDat;
 import com.cuoiky.coffee3ae.model.DonDat;
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference mDatabase;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
