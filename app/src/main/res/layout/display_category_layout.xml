@@ -14,12 +14,13 @@
         android:textColor="@color/black"
         android:layout_gravity="center"
         />
-    <GridView
+
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gvCategory"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
         android:verticalSpacing="15dp">
-    </GridView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
