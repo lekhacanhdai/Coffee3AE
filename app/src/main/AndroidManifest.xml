@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coffee3AE">
         <activity
+            android:name=".view.Activities.AddStaffActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.Activities.AddMenuActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.Activities.AddCategoryActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

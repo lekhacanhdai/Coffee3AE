@@ -1,4 +1,4 @@
-package com.cuoiky.coffee3ae.Fragments;
+package com.cuoiky.coffee3ae.view.Fragments;
 
 import android.os.Bundle;
 
