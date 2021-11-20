@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/home_layout"
     tools:openDrawer="start"
     tools:context=".view.Activities.HomeActivity">
 
@@ -12,6 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tbar_home"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"/>
@@ -22,6 +24,7 @@
 
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
