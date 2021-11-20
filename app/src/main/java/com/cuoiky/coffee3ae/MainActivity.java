@@ -2,7 +2,9 @@ package com.cuoiky.coffee3ae;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.cuoiky.coffee3ae.databinding.ActivityMainBinding;
 import com.cuoiky.coffee3ae.model.BanAn;
@@ -13,6 +15,7 @@ import com.cuoiky.coffee3ae.model.Mon;
 import com.cuoiky.coffee3ae.model.NhanVien;
 import com.cuoiky.coffee3ae.model.Quyen;
 import com.cuoiky.coffee3ae.model.ThanhToan;
+import com.cuoiky.coffee3ae.view.Activities.HomeActivity;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -38,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
 //                "anhdai123", "123456", "khacdai0801@gmail.com", "0123454535", "Nam", "08/01/2001"));
 //        mDatabase.child("PhanQuyen").child(String.valueOf(1)).setValue(new Quyen(1, "Nhan Vien"));
 //        mDatabase.child("ThanhToan").child(String.valueOf(1)).setValue(new ThanhToan("Cafe sua", 10, 100000, "url"));
-
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        View viewRoot = binding.getRoot();
+        setContentView(viewRoot);
+        binding.btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

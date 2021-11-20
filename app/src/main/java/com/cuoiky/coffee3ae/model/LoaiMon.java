@@ -29,7 +29,7 @@ public class LoaiMon {
         this.tenLoai = tenLoai;
     }
 
-    public Uri getHinhAnh() {
+    public String getHinhAnh() {
         return hinhAnh;
     }
 
