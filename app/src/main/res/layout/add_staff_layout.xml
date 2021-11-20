@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="view.Activities.AddStaffActivity"
+    android:transitionName="transition_signup"
+    android:id="@+id/AddStaff"
+    android:background="#E0C0A9"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:id="@+id/img_addstaff_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:padding="5dp"
+                android:layout_centerVertical="true"
+                />
+
+            <TextView
+                android:id="@+id/txt_addstaff_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/img_addstaff_back"
+                android:paddingLeft="15dp"
+                android:text="Thêm nhân viên"
+                android:textColor="@color/black"
+                android:textSize="30sp" />
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="300dp"
+                android:padding="5dp"
+                android:src="@drawable/logo" />
+
+        </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/txt_addstaff_Permission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="Quyền:"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+
+                <RadioGroup
+                    android:id="@+id/rg_addstaff_Quyen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:layout_toRightOf="@id/txt_addstaff_Permission"
+                    android:layout_centerVertical="true"
+                    >
+
+                    <RadioButton
+                        android:id="@+id/rd_addstaff_QuanLy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quản lý"
+                        android:textSize="16sp"
+                        android:layout_marginRight="10dp"/>
+
+                    <RadioButton
+                        android:id="@+id/rd_addstaff_NhanVien"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nhân viên"
+                        android:textSize="16sp"
+                        android:layout_marginRight="10dp"/>
+
+                </RadioGroup>
+            </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_height="605dp"
+            android:layout_width="match_parent"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtl_addstaff_HoVaTen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Họ và tên "
+            app:startIconDrawable="@drawable/ic_baseline_border_color_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconTint="@color/black"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            app:boxBackgroundColor="#F3DFC7"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtl_addstaff_TenDN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên tài khoản"
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconTint="@color/black"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/black"
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            app:boxBackgroundColor="#F3DFC7"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="text"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtl_addstaff_Email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            app:startIconDrawable="@drawable/ic_baseline_email_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconTint="@color/black"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/black"
+            android:layout_marginTop="150dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            app:boxBackgroundColor="#F3DFC7"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textEmailAddress"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtl_addstaff_SDT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số điện thoại"
+            app:startIconDrawable="@drawable/ic_baseline_call_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconTint="@color/black"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/black"
+            android:layout_marginTop="220dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            app:boxBackgroundColor="#F3DFC7"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="phone"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/txtl_addstaff_MatKhau"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mật khẩu "
+            app:startIconDrawable="@drawable/ic_baseline_lock_24"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:startIconTint="@color/black"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/black"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black"
+            app:endIconTint="@color/black"
+            app:boxStrokeWidthFocused="2dp"
+            app:boxStrokeColor="@color/black"
+            android:layout_marginTop="290dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            app:boxBackgroundColor="#F3DFC7"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="360dp"
+            android:layout_marginLeft="10dp"
+            >
+
+            <TextView
+                android:id="@+id/txt_addstaff_Gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Giới tính:"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <RadioGroup
+                android:id="@+id/rg_addstaff_GioiTinh"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:layout_toRightOf="@id/txt_addstaff_Gender"
+                android:layout_centerVertical="true"
+                >
+
+                <RadioButton
+                    android:id="@+id/rd_addstaff_Nam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nam"
+                    android:layout_marginRight="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/rd_addstaff_Nu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nữ"
+                    android:layout_marginRight="10dp"/>
+
+                <RadioButton
+                    android:id="@+id/rd_addstaff_Khac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Khác" />
+            </RadioGroup>
+        </RelativeLayout>
+
+
+
+        <DatePicker
+            android:id="@+id/dt_addstaff_NgaySinh"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            android:spinnersShown="true"
+            android:layout_marginTop="380dp"
+            />
+
+
+            <Button
+                android:id="@+id/btn_addstaff_ThemNV"
+                android:layout_width="300dp"
+                android:layout_marginLeft="40dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="550dp"
+                android:elevation="5dp"
+                android:text="Thêm nhân viên"
+                android:textColor="#000000"
+                app:backgroundTint="#E3A254"
+                app:cornerRadius="30dp"
+                />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</ScrollView>

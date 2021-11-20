@@ -1,5 +1,7 @@
 package com.cuoiky.coffee3ae.model;
 
+import android.net.Uri;
+
 public class LoaiMon {
     private int maLoai;
     private String tenLoai;
@@ -27,7 +29,7 @@ public class LoaiMon {
         this.tenLoai = tenLoai;
     }
 
-    public String getHinhAnh() {
+    public Uri getHinhAnh() {
         return hinhAnh;
     }
 
