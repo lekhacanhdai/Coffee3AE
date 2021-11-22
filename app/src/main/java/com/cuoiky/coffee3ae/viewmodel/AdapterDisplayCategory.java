@@ -35,7 +35,7 @@ public class AdapterDisplayCategory extends RecyclerView.Adapter<AdapterDisplayC
     @Override
     public void onBindViewHolder(@NonNull AdapterDisplayCategory.ViewHolder holder, int position) {
             holder.tenloai.setText(LoaiMonList.get(position).getTenLoai());
-//            holder.img_monan.setImageURI(LoaiMonList.get(position).getHinhAnh());
+            new DownloadImageTask(holder.img_monan).execute(LoaiMonList.get(position).getHinhAnh());
     }
 
     @Override

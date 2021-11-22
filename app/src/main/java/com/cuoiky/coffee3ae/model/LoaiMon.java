@@ -2,6 +2,9 @@ package com.cuoiky.coffee3ae.model;
 
 import android.net.Uri;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class LoaiMon {
     private int maLoai;
     private String tenLoai;
@@ -12,6 +15,7 @@ public class LoaiMon {
         this.tenLoai = tenLoai;
         this.hinhAnh = hinhAnh;
     }
+    public LoaiMon(){}
 
     public int getMaLoai() {
         return maLoai;

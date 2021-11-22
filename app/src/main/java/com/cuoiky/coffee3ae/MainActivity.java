@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 //        mDatabase.child("BanAn").child(String.valueOf(1)).setValue(new BanAn(1, "Ban 1", false));
 //        mDatabase.child("ChiTietDonDat").child(String.valueOf(1)).setValue(new ChiTietDonDat(1, 1, 10));
 //        mDatabase.child("DonDat").child(String.valueOf(1)).setValue(new DonDat(1,1,1, "Con hang", "12/11/2021", "100000"));
-//        mDatabase.child("LoaiMon").child(String.valueOf(1)).setValue(new LoaiMon(1, "Cafe", "url"));
+//        mDatabase.child("LoaiMon").child(String.valueOf(2)).setValue(new LoaiMon(2, "Cafe2", "https://vietblend.vn/wp-content/uploads/2018/12/tra-sua-ngon.jpg"));
 //        mDatabase.child("Mon").child(String.valueOf(1)).setValue(new Mon(1,1,"Cafe Sua", "10000", "Con", "url"));
 //        mDatabase.child("NhanVien").child(String.valueOf(1)).setValue(new NhanVien(1, 1, "Le Khac Anh Dai",
 //                "anhdai123", "123456", "khacdai0801@gmail.com", "0123454535", "Nam", "08/01/2001"));
