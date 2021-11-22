@@ -20,18 +20,18 @@
                 android:src="@drawable/ic_baseline_menu_24" />
 
             <TextView
-                android:id="@+id/tv_title"
-                style="?android:textAppearanceLarge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="80dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="10sp"
-                android:text="Quan li "
-                android:textColor="@color/white"
-                android:textSize="40dp"
-                android:textStyle="normal" />
+                 android:id="@+id/tv_title"
+                 style="?android:textAppearanceLarge"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginLeft="80dp"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:padding="10sp"
+                 android:text="Quan li "
+                 android:textColor="@color/white"
+                 android:textSize="40dp"
+                 android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/tv_save"

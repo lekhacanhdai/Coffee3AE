@@ -66,10 +66,10 @@ public class DisplayCategoryActivity extends AppCompatActivity {
     }
 
     private void SetupSuportActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowCustomEnabled(true);
-        actionBar.setCustomView(R.layout.support_menu_category);
+         ActionBar actionBar = getSupportActionBar();
+         actionBar.setDisplayHomeAsUpEnabled(true);
+         actionBar.setDisplayShowCustomEnabled(true);
+         actionBar.setCustomView(R.layout.support_menu_category);
     }
 
     public boolean onSupportNavigateUp(){
