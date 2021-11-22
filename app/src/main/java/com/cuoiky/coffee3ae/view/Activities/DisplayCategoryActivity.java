@@ -2,6 +2,7 @@
 package com.cuoiky.coffee3ae.view.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -23,8 +24,8 @@ import java.util.ArrayList;
 public class DisplayCategoryActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private ArrayList<LoaiMon> dataArrayList;
-    private AdapterDisplayCategory dataAdapter;
+    private ArrayList<LoaiMon> loaiMonList;
+    private AdapterDisplayCategory loaiMonAdapter;
     private DisplayCategoryLayoutBinding binding;
 
     @Override
@@ -36,22 +37,24 @@ public class DisplayCategoryActivity extends AppCompatActivity {
         View viewRoot = binding.getRoot();
         setContentView(viewRoot);
 
-        dataArrayList = new ArrayList<LoaiMon>();
-        dataAdapter = new AdapterDisplayCategory(dataArrayList);
+        databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("LoaiMon");
+        loaiMonList = new ArrayList<LoaiMon>();
+        loaiMonAdapter = new AdapterDisplayCategory(loaiMonList);
 
-        binding.gvCategory.setLayoutManager(new LinearLayoutManager(this));
-        binding.gvCategory.setAdapter(dataAdapter);
+        binding.rvCategory.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvCategory.setAdapter(loaiMonAdapter);
 
-        databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/LoaiMon/").getReference();
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot item:snapshot.getChildren())
                 {
                     LoaiMon data = item.getValue(LoaiMon.class);
-                    dataArrayList.add(data);
-                    dataAdapter.notifyDataSetChanged();
+                    loaiMonList.add(data);
+
                 }
+                loaiMonAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -60,6 +63,17 @@ public class DisplayCategoryActivity extends AppCompatActivity {
             }
         });
 
+    }
 
+    private void SetupSuportActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setCustomView(R.layout.support_menu_category);
+    }
+
+    public boolean onSupportNavigateUp(){
+        onBackPressed();
+        return true;
     }
 }

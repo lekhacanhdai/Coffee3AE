@@ -3,18 +3,32 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/drawable/ic_baseline_attach_money_24.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/drawable/ic_baseline_border_color_24.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/drawable/ic_baseline_call_24.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/drawable/ic_baseline_fastfood_24.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.3385416666666667" />
-        <entry key="app/src/main/res/drawable/ic_baseline_restaurant_24.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/drawable/ic_home_solid.xml" value="0.3385416666666667" />
-        <entry key="app/src/main/res/drawable/round_corner_categorytext.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/layout/activity_home.xml" value="0.153125" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3223958333333333" />
+        <entry key="../../../../../../../../layout/custom_preview.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_attach_money_24.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_border_color_24.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_fastfood_24.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_free_breakfast_24.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_restaurant_24.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/mau_thuc_don.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/my_button_bg.xml" value="0.371875" />
+        <entry key="app/src/main/res/drawable/round_corner_categorytext.xml" value="0.371875" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.31354166666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.27309782608695654" />
+        <entry key="app/src/main/res/layout/add_category_layout.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/add_staff_layout.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/addmenu_layout.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/custom_layout_displaycategory.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/display_category_fragment.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/display_category_layout.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/displaycaterory_layout.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3328804347826087" />
+        <entry key="app/src/main/res/layout/menu_home_header.xml" value="0.3328804347826087" />
+        <entry key="app/src/main/res/layout/menu_type_item_row.xml" value="0.3328804347826087" />
+        <entry key="app/src/main/res/layout/support_menu_category.xml" value="0.3265625" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.3260416666666667" />
       </map>
     </option>
   </component>
