@@ -16,6 +16,7 @@ import com.cuoiky.coffee3ae.model.NhanVien;
 import com.cuoiky.coffee3ae.model.Quyen;
 import com.cuoiky.coffee3ae.model.ThanhToan;
 import com.cuoiky.coffee3ae.view.Activities.HomeActivity;
+import com.cuoiky.coffee3ae.view.Activities.TestActivity;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         binding.btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                Intent intent = new Intent(MainActivity.this, TestActivity.class);
                 startActivity(intent);
             }
         });

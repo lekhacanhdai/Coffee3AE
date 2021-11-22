@@ -15,7 +15,6 @@ import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.FragmentHomeBinding;
 import com.cuoiky.coffee3ae.model.LoaiMon;
 import com.cuoiky.coffee3ae.viewmodel.AdapterDisplayCategory;
-import com.cuoiky.coffee3ae.viewmodel.DAO.LoaiMonDAO;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
