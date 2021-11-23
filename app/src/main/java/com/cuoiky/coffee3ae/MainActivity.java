@@ -8,14 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cuoiky.coffee3ae.databinding.ActivityMainBinding;
-import com.cuoiky.coffee3ae.model.BanAn;
-import com.cuoiky.coffee3ae.model.ChiTietDonDat;
 import com.cuoiky.coffee3ae.model.DonDat;
-import com.cuoiky.coffee3ae.model.LoaiMon;
-import com.cuoiky.coffee3ae.model.Mon;
-import com.cuoiky.coffee3ae.model.NhanVien;
-import com.cuoiky.coffee3ae.model.Quyen;
-import com.cuoiky.coffee3ae.model.ThanhToan;
+import com.cuoiky.coffee3ae.view.Activities.DisplayCategoryActivity;
 import com.cuoiky.coffee3ae.view.Activities.HomeActivity;
 import com.cuoiky.coffee3ae.view.Activities.TestActivity;
 import com.google.firebase.FirebaseApp;
@@ -37,19 +31,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FirebaseApp.initializeApp(this);
         mDatabase = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference();
-        BanAn banAn = new BanAn(5, "ban 5", true);
-        LoaiMon loaiMon = new LoaiMon(1, "cafe", "url");
-        Mon mon = new Mon(1, "Cafe sua", "1000000", "Con hang", "url", loaiMon);
-        Quyen quyen = new Quyen(2, "Chu");
-        NhanVien nhanVien = new NhanVien(10, "abc", "cba", "kdfjas", "asdkfjsa", "012390139", "Nam", "01039", quyen);
-        DonDat donDat = new DonDat(10, "Da thanh toan", "1034901", "841392",  banAn, nhanVien);
-        ChiTietDonDat chiTietDonDat = new ChiTietDonDat(10, mon, donDat);
-        mDatabase.child("BanAn").child("test").setValue(banAn);
-        mDatabase.child("ChiTietDonDat").child("test").setValue(chiTietDonDat);
-        mDatabase.child("DonDat").child("test").setValue(donDat);
-        mDatabase.child("LoaiMon").child("test").setValue(loaiMon);
-        mDatabase.child("Mon").child("test").setValue(mon);
-        mDatabase.child("NhanVien").child("test").setValue(nhanVien);
+//        BanAn banAn = new BanAn(5, "ban 5", true);
+//        LoaiMon loaiMon = new LoaiMon(1, "cafe", "url");
+//        Mon mon = new Mon(1, "Cafe sua", "1000000", "Con hang", "url", loaiMon);
+//        Quyen quyen = new Quyen(2, "Chu");
+//        NhanVien nhanVien = new NhanVien(10, "abc", "cba", "kdfjas", "asdkfjsa", "012390139", "Nam", "01039", quyen);
+//        DonDat donDat = new DonDat(10, "Da thanh toan", "1034901", "841392",  banAn, nhanVien);
+//        ChiTietDonDat chiTietDonDat = new ChiTietDonDat(10, mon, donDat);
+//        mDatabase.child("BanAn").child("test").setValue(banAn);
+//        mDatabase.child("ChiTietDonDat").child("test").setValue(chiTietDonDat);
+//        mDatabase.child("DonDat").child("test").setValue(donDat);
+//        mDatabase.child("LoaiMon").child("test").setValue(loaiMon);
+//        mDatabase.child("Mon").child("test").setValue(mon);
+//        mDatabase.child("NhanVien").child("test").setValue(nhanVien);
 //        mDatabase.child("PhanQuyen").child(String.valueOf(1)).setValue(new Quyen(1, "Nhan Vien"));
 //        mDatabase.child("ThanhToan").child(String.valueOf(1)).setValue(new ThanhToan("Cafe sua", 10, 100000, "url"));
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -58,8 +52,9 @@ public class MainActivity extends AppCompatActivity {
         binding.btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, TestActivity.class);
-                startActivity(intent);
+
+                Intent intent = new Intent(MainActivity.this, DisplayCategoryActivity.class);
+
             }
         });
         mDatabase = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("DonDat");

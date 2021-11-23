@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cuoiky.coffee3ae">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,6 +16,9 @@
             android:exported="true" />
         <activity
             android:name=".view.Activities.HomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.Activities.DisplayCategoryActivity"
             android:exported="true" />
         <activity
             android:name=".view.Activities.AddStaffActivity"
