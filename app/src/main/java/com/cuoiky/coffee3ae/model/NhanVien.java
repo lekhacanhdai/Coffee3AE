@@ -19,7 +19,10 @@ public class NhanVien {
         this.ngaySinh = ngaySinh;
         this.quyen = quyen;
     }
-    public NhanVien(){}
+    public NhanVien() {
+    }
+
+
     public int getMaNV() {
         return maNV;
     }
