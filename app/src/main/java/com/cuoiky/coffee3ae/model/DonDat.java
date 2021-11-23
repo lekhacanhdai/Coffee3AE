@@ -1,40 +1,30 @@
 package com.cuoiky.coffee3ae.model;
 
-public class DonDat {
-    private int maDonDat, maBan, maNV;
-    private String tinhTrang, ngayDat, tongTien;
 
-    public DonDat(int maDonDat, int maBan, int maNV, String tinhTrang, String ngayDat, String tongTien) {
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
+public class DonDat {
+    int maDonDat;
+    private String tinhTrang, ngayDat, tongTien;
+    public BanAn ban;
+    public NhanVien nhanVien;
+
+    public DonDat(int maDonDat, String tinhTrang, String ngayDat, String tongTien, BanAn ban, NhanVien nhanVien) {
         this.maDonDat = maDonDat;
-        this.maBan = maBan;
-        this.maNV = maNV;
         this.tinhTrang = tinhTrang;
         this.ngayDat = ngayDat;
         this.tongTien = tongTien;
+        this.ban = ban;
+        this.nhanVien = nhanVien;
     }
-
+    public DonDat(){}
     public int getMaDonDat() {
         return maDonDat;
     }
 
     public void setMaDonDat(int maDonDat) {
         this.maDonDat = maDonDat;
-    }
-
-    public int getMaBan() {
-        return maBan;
-    }
-
-    public void setMaBan(int maBan) {
-        this.maBan = maBan;
-    }
-
-    public int getMaNV() {
-        return maNV;
-    }
-
-    public void setMaNV(int maNV) {
-        this.maNV = maNV;
     }
 
     public String getTinhTrang() {
@@ -59,5 +49,21 @@ public class DonDat {
 
     public void setTongTien(String tongTien) {
         this.tongTien = tongTien;
+    }
+
+    public BanAn getBan() {
+        return ban;
+    }
+
+    public void setBan(BanAn ban) {
+        this.ban = ban;
+    }
+
+    public NhanVien getNhanVien() {
+        return nhanVien;
+    }
+
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
     }
 }

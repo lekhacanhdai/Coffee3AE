@@ -87,11 +87,12 @@ public class LoginActivity extends AppCompatActivity {
                         break;
                     }
                 }
-                Log.d("taggg", ""+nhanVienChecked.getMaNV());
                 if (nhanVienChecked.getMaNV()!=0){
                     SharedPreferences sharedPreferences = getSharedPreferences("luuquyen", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("maquyen", nhanVienChecked.getMaQuyen());
+                    editor.putInt("maquyen", nhanVienChecked.getQuyen().getMaQuyen());
+                    Log.d("taggg", ""+nhanVienChecked.getQuyen().getTenQuyen());
+
                     editor.commit();
 
                     //Gửi dữ liệu sang trang chủ

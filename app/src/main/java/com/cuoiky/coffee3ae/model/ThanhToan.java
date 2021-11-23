@@ -1,5 +1,8 @@
 package com.cuoiky.coffee3ae.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class ThanhToan {
     private String tenMon;
     private int soLuong, giaTien;
@@ -11,7 +14,7 @@ public class ThanhToan {
         this.giaTien = giaTien;
         this.hinhAnh = hinhAnh;
     }
-
+    public ThanhToan(){}
     public String getTenMon() {
         return tenMon;
     }

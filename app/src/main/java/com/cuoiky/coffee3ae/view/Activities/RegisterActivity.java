@@ -1,10 +1,13 @@
 package com.cuoiky.coffee3ae.view.Activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
@@ -13,10 +16,17 @@ import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.RegisterLayoutBinding;
 import com.cuoiky.coffee3ae.model.NhanVien;
 import com.cuoiky.coffee3ae.model.Quyen;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
@@ -26,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseDatabase database;
     String hoTen,tenDN,eMail,sDT,matKhau,gioiTinh;
+    private int id;
 
     public static final String BUNDLE = "BUNDLE";
     private static final Pattern PASSWORD_PATTERN =
@@ -44,6 +55,38 @@ public class RegisterActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/");
         mDatabase = database.getReference("NhanVien");
 
+        Query query = mDatabase.limitToLast(1);
+
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                NhanVien nhanVien = snapshot.getValue(NhanVien.class);
+                id = nhanVien.getMaNV();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
         binding.btnSignupNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +103,30 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 String ngaySinh = binding.dtSignupNgaySinh.getDayOfMonth() + "/" + (binding.dtSignupNgaySinh.getMonth() + 1)
                         +"/"+binding.dtSignupNgaySinh.getYear();
+                NhanVien newNhanVien = new NhanVien();
+                newNhanVien.setQuyen(new Quyen(2,"Nhan vien"));
+                newNhanVien.setTenDN(binding.txtlSignupTenDN.getEditText().getText().toString());
+                newNhanVien.setMatKhau(binding.txtlSignupMatKhau.getEditText().getText().toString());
+                newNhanVien.setHoTenNV(binding.txtlSignupHoVaTen.getEditText().getText().toString());
+                newNhanVien.setEmail(binding.txtlSignupEmail.getEditText().getText().toString());
+                newNhanVien.setGioiTinh(gioiTinh);
+                newNhanVien.setNgaySinh(ngaySinh);
+                newNhanVien.setMaNV(id+1);
 
+                Log.d("in ra id", ""+ id);
+                mDatabase.child(Integer.toString(id+1)).setValue(newNhanVien)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "Successfully!", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Failed!", Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        });
             }
         });
     }

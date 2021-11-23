@@ -1,5 +1,8 @@
 package com.cuoiky.coffee3ae.model;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Quyen {
     private int maQuyen;
     private String tenQuyen;
@@ -8,7 +11,7 @@ public class Quyen {
         this.maQuyen = maQuyen;
         this.tenQuyen = tenQuyen;
     }
-
+    public Quyen(){}
     public int getMaQuyen() {
         return maQuyen;
     }

@@ -1,12 +1,15 @@
 package com.cuoiky.coffee3ae.model;
 
-public class NhanVien {
-    private int maNV, maQuyen;
-    private String hoTenNV, tenDN, matKhau, email, sdt, gioiTinh, ngaySinh;
+import com.google.firebase.database.IgnoreExtraProperties;
 
-    public NhanVien(int maNV, int maQuyen, String hoTenNV, String tenDN, String matKhau, String email, String sdt, String gioiTinh, String ngaySinh) {
+@IgnoreExtraProperties
+public class NhanVien {
+    private int maNV;
+    private String hoTenNV, tenDN, matKhau, email, sdt, gioiTinh, ngaySinh;
+    public Quyen quyen;
+
+    public NhanVien(int maNV, String hoTenNV, String tenDN, String matKhau, String email, String sdt, String gioiTinh, String ngaySinh, Quyen quyen) {
         this.maNV = maNV;
-        this.maQuyen = maQuyen;
         this.hoTenNV = hoTenNV;
         this.tenDN = tenDN;
         this.matKhau = matKhau;
@@ -14,6 +17,7 @@ public class NhanVien {
         this.sdt = sdt;
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
+        this.quyen = quyen;
     }
     public NhanVien() {
     }
@@ -27,12 +31,12 @@ public class NhanVien {
         this.maNV = maNV;
     }
 
-    public int getMaQuyen() {
-        return maQuyen;
+    public Quyen getQuyen() {
+        return quyen;
     }
 
-    public void setMaQuyen(int maQuyen) {
-        this.maQuyen = maQuyen;
+    public void setQuyen(Quyen quyen) {
+        this.quyen = quyen;
     }
 
     public String getHoTenNV() {
