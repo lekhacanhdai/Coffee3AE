@@ -15,9 +15,10 @@ import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.FragmentHomeBinding;
 import com.cuoiky.coffee3ae.model.DonDat;
 import com.cuoiky.coffee3ae.model.LoaiMon;
+import com.cuoiky.coffee3ae.view.Activities.HomeActivity;
 import com.cuoiky.coffee3ae.viewmodel.AdapterDisplayCategory;
-
 import com.cuoiky.coffee3ae.viewmodel.DonDatAdapter;
+import com.cuoiky.coffee3ae.viewmodel.IClickListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,7 +50,8 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        ((HomeActivity)getActivity()).getSupportActionBar().show();
+        setHasOptionsMenu(true);
         mDatabase = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseRef = mDatabase.getReference("LoaiMon");
         loaiMonList = new ArrayList<LoaiMon>();
@@ -61,7 +63,12 @@ public class HomeFragment extends Fragment {
 
         binding.rvTypeMenuHome.setHasFixedSize(true);
         binding.rvTypeMenuHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        loaiMonAdapter = new AdapterDisplayCategory(loaiMonList);
+        loaiMonAdapter = new AdapterDisplayCategory(loaiMonList, new IClickListener() {
+            @Override
+            public void onClickLoaiMon(LoaiMon loaiMon) {
+
+            }
+        });
 
         binding.rvTypeMenuHome.setAdapter(loaiMonAdapter);
 

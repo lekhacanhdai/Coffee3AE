@@ -77,5 +77,22 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
+
+
     }
+
+       /* mDatabase = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("DonDat");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item: snapshot.getChildren()){
+                    DonDat data = item.getValue(DonDat.class);
+                    System.out.println(data.getNhanVien().getHoTenNV());
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
 }
