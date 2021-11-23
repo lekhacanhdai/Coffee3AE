@@ -15,6 +15,9 @@ public class NhanVien {
         this.gioiTinh = gioiTinh;
         this.ngaySinh = ngaySinh;
     }
+    public NhanVien() {
+    }
+
 
     public int getMaNV() {
         return maNV;

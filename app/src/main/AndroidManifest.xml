@@ -7,8 +7,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Coffee3AE">
+        <activity
+            android:name=".view.Activities.RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.Activities.LoginActivity"
+            android:exported="true" />
         <activity
             android:name=".view.Activities.HomeActivity"
             android:exported="true" />
@@ -23,6 +30,12 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.Activities.WelcomeActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.Activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

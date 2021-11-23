@@ -1,8 +1,6 @@
-package com.cuoiky.coffee3ae.view.activities;
+package com.cuoiky.coffee3ae.view.Activities;
 
-import static com.cuoiky.coffee3ae.R.*;
-
-import androidx.appcompat.app.AppCompatActivity;
+import static com.cuoiky.coffee3ae.R.anim;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +9,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.cuoiky.coffee3ae.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.cuoiky.coffee3ae.databinding.SplashLayoutBinding;
 
 public class SplashActivity extends AppCompatActivity {
@@ -39,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.fade_in, anim.fade_out);
+                overridePendingTransition(anim.fade_in, anim.fade_out);
                 finish();
             }
         }, SPLASH_TIMER);

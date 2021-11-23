@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.SplashActivity"
+    tools:context=".view.Activities.SplashActivity"
     android:background="#E0C0A9"
     >
 
@@ -12,7 +12,7 @@
         android:id="@+id/imgLogo"
         android:layout_width="408dp"
         android:layout_height="392dp"
-        android:src="@drawable/logo_tachnen"
+        android:src="@drawable/logo"
         android:layout_gravity="center|top"
         android:layout_marginTop="30dp"
         />
