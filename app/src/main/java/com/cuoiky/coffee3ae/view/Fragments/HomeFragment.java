@@ -13,9 +13,11 @@ import android.widget.Adapter;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.FragmentHomeBinding;
+import com.cuoiky.coffee3ae.model.DonDat;
 import com.cuoiky.coffee3ae.model.LoaiMon;
 import com.cuoiky.coffee3ae.viewmodel.AdapterDisplayCategory;
 
+import com.cuoiky.coffee3ae.viewmodel.DonDatAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +30,12 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private ArrayList<LoaiMon> loaiMonList;
     AdapterDisplayCategory loaiMonAdapter;
-    private DatabaseReference mDatabase;
+
+    private ArrayList<DonDat> listDonDat;
+    private DonDatAdapter donDatAdapter;
+    private DatabaseReference databaseRef;
+    private DatabaseReference donDatRef;
+    private FirebaseDatabase mDatabase;
     FragmentHomeBinding binding;
 
     @Override
@@ -43,7 +50,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mDatabase = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("LoaiMon");
+        mDatabase = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/");
+        databaseRef = mDatabase.getReference("LoaiMon");
         loaiMonList = new ArrayList<LoaiMon>();
 
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
@@ -57,7 +65,7 @@ public class HomeFragment extends Fragment {
 
         binding.rvTypeMenuHome.setAdapter(loaiMonAdapter);
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item: snapshot.getChildren()){
@@ -71,6 +79,30 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+        donDatRef = mDatabase.getReference("DonDat");
+        listDonDat = new ArrayList<DonDat>();
+        binding.rvDonDatHonme.setHasFixedSize(true);
+        binding.rvDonDatHonme.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        donDatAdapter = new DonDatAdapter(listDonDat);
+
+        binding.rvDonDatHonme.setAdapter(donDatAdapter);
+        donDatRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot item : snapshot.getChildren()){
+                    DonDat donDat = item.getValue(DonDat.class);
+                    listDonDat.add(donDat);
+                }
+                donDatAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 }
