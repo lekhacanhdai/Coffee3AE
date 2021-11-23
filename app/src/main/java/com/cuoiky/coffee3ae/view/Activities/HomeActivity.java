@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.ActivityHomeBinding;
 import com.cuoiky.coffee3ae.databinding.ActivityMainBinding;
+import com.cuoiky.coffee3ae.view.Fragments.DisplayCategoryFragment;
 import com.cuoiky.coffee3ae.view.Fragments.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -51,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction tranHomeF = fragmentManager.beginTransaction();
-        HomeFragment homeFragment = new HomeFragment();
+        DisplayCategoryFragment homeFragment = new DisplayCategoryFragment();
         tranHomeF.replace(R.id.home_view, homeFragment);
         tranHomeF.commit();
 
