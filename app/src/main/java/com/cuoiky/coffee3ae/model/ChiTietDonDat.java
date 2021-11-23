@@ -1,29 +1,21 @@
 package com.cuoiky.coffee3ae.model;
 
+
+import com.google.firebase.database.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class ChiTietDonDat {
-    private int maDonDat, maMon, soLuong;
+    public int soLuong;
+    public Mon mon;
+    public DonDat donDat;
 
-    public ChiTietDonDat(int maDonDat, int maMon, int soLuong) {
-        this.maDonDat = maDonDat;
-        this.maMon = maMon;
+    public ChiTietDonDat(int soLuong, Mon mon, DonDat donDat) {
         this.soLuong = soLuong;
+        this.mon = mon;
+        this.donDat = donDat;
     }
 
-    public int getMaDonDat() {
-        return maDonDat;
-    }
-
-    public void setMaDonDat(int maDonDat) {
-        this.maDonDat = maDonDat;
-    }
-
-    public int getMaMon() {
-        return maMon;
-    }
-
-    public void setMaMon(int maMon) {
-        this.maMon = maMon;
-    }
+    public ChiTietDonDat(){}
 
     public int getSoLuong() {
         return soLuong;
@@ -31,5 +23,21 @@ public class ChiTietDonDat {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+    }
+
+    public Mon getMon() {
+        return mon;
+    }
+
+    public void setMon(Mon mon) {
+        this.mon = mon;
+    }
+
+    public DonDat getDonDat() {
+        return donDat;
+    }
+
+    public void setDonDat(DonDat donDat) {
+        this.donDat = donDat;
     }
 }

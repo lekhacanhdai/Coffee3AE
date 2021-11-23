@@ -44,10 +44,12 @@ public class HomeFragment extends Fragment {
 
         mDatabase = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("LoaiMon");
         loaiMonList = new ArrayList<LoaiMon>();
+
         binding = FragmentHomeBinding.inflate(getLayoutInflater());
         View viewRoot = binding.getRoot();
-
         getActivity().setContentView(viewRoot);
+
+
         binding.rvTypeMenuHome.setHasFixedSize(true);
         binding.rvTypeMenuHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         loaiMonAdapter = new AdapterDisplayCategory(loaiMonList);
