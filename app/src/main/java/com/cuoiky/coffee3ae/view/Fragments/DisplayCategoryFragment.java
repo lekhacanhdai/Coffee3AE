@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cuoiky.coffee3ae.MainActivity;
 import com.cuoiky.coffee3ae.R;
@@ -35,7 +36,7 @@ public class DisplayCategoryFragment extends Fragment {
     private DatabaseReference databaseReference;
     private ArrayList<LoaiMon> loaiMonList;
     private AdapterDisplayCategory loaiMonAdapter;
-    private DisplayCategoryLayoutBinding binding;
+    private RecyclerView recyclerView;
     FragmentManager fragmentManager;
 
     @Override
@@ -55,10 +56,7 @@ public class DisplayCategoryFragment extends Fragment {
         ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Quản lý thực đơn");
 
         fragmentManager = getActivity().getSupportFragmentManager();
-
-        binding = DisplayCategoryLayoutBinding.inflate(getLayoutInflater());
-        View viewRoot = binding.getRoot();
-        getActivity().setContentView(viewRoot);
+        recyclerView = view.findViewById(R.id.rvCategory);
 
         databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("LoaiMon");
         loaiMonList = new ArrayList<LoaiMon>();
@@ -84,8 +82,8 @@ public class DisplayCategoryFragment extends Fragment {
             }
         });
 
-        binding.rvCategory.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false));
-        binding.rvCategory.setAdapter(loaiMonAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(loaiMonAdapter);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,8 +102,6 @@ public class DisplayCategoryFragment extends Fragment {
 
             }
         });
-
-
 
         return view;
     }
