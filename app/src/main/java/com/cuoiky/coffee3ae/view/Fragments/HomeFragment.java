@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,6 @@ public class HomeFragment extends Fragment {
     private DatabaseReference databaseRef;
     private DatabaseReference donDatRef;
     private FirebaseDatabase mDatabase;
-    FragmentHomeBinding binding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,19 +50,16 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ((HomeActivity)getActivity()).getSupportActionBar().show();
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Trang chủ");
         setHasOptionsMenu(true);
         mDatabase = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseRef = mDatabase.getReference("LoaiMon");
         loaiMonList = new ArrayList<LoaiMon>();
 
-        binding = FragmentHomeBinding.inflate(getLayoutInflater());
-        View viewRoot = binding.getRoot();
-        getActivity().setContentView(viewRoot);
-
-
-        binding.rvTypeMenuHome.setHasFixedSize(true);
-        binding.rvTypeMenuHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        RecyclerView rvTypeMenuHome = view.findViewById(R.id.rv_type_menu_home);
+        rvTypeMenuHome.setHasFixedSize(true);
+        rvTypeMenuHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         loaiMonAdapter = new AdapterDisplayCategory(loaiMonList, new IClickListener() {
             @Override
             public void onClickLoaiMon(LoaiMon loaiMon) {
@@ -70,7 +67,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        binding.rvTypeMenuHome.setAdapter(loaiMonAdapter);
+        rvTypeMenuHome.setAdapter(loaiMonAdapter);
 
         databaseRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -87,13 +84,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        RecyclerView rvDonDatHome = view.findViewById(R.id.rv_don_dat_honme);
+
         donDatRef = mDatabase.getReference("DonDat");
         listDonDat = new ArrayList<DonDat>();
-        binding.rvDonDatHonme.setHasFixedSize(true);
-        binding.rvDonDatHonme.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        rvDonDatHome.setHasFixedSize(true);
+        rvDonDatHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         donDatAdapter = new DonDatAdapter(listDonDat);
 
-        binding.rvDonDatHonme.setAdapter(donDatAdapter);
+        rvDonDatHome.setAdapter(donDatAdapter);
         donDatRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -110,6 +110,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return view;
     }
 }
