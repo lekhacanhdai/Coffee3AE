@@ -118,7 +118,7 @@
             android:layout_height="50dp"
             app:cardCornerRadius="25dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="34dp"
             >
             <Button
                 android:id="@+id/btn_login_DangNhap"
