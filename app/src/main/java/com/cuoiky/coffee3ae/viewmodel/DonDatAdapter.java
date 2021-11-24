@@ -30,6 +30,10 @@ public class DonDatAdapter extends RecyclerView.Adapter<DonDatAdapter.ViewHoder>
     @Override
     public void onBindViewHolder(@NonNull ViewHoder holder, int position) {
         holder.tvTinhTrang.setText(listDonDat.get(position).getTinhTrang());
+        holder.tvTenNhanVien.setText(listDonDat.get(position).getNhanVien().getHoTenNV());
+        holder.tvNgay.setText(listDonDat.get(position).getNgayDat());
+        holder.tvMaDonDat.setText("Mã đơn: " + listDonDat.get(position).getMaDonDat());
+        holder.tvMaBan.setText(listDonDat.get(position).getBan().getTenBan());
     }
 
     @Override

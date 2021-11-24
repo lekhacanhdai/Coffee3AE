@@ -77,7 +77,7 @@ public class DisplayCategoryFragment extends Fragment {
                 System.out.println(tenLoai);
 
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
-                transaction.replace(R.id.home_view,displayMenuFragment).addToBackStack("hienthiloai");
+                transaction.replace(R.id.home_view,displayMenuFragment);
                 transaction.commit();
 
 

@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.ActivityHomeBinding;
 import com.cuoiky.coffee3ae.databinding.ActivityMainBinding;
+import com.cuoiky.coffee3ae.view.Fragments.BlankFragment;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayCategoryFragment;
 import com.cuoiky.coffee3ae.view.Fragments.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -36,6 +37,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(binding.tbarHome);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        binding.navHome.setNavigationItemSelectedListener(this);
+
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this,binding.homeLayout, binding.tbarHome
                 ,R.string.opentoggle,R.string.closetoggle){
             @Override
@@ -51,11 +54,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction tranHomeF = fragmentManager.beginTransaction();
-        DisplayCategoryFragment homeFragment = new DisplayCategoryFragment();
+        HomeFragment homeFragment = new HomeFragment();
         tranHomeF.replace(R.id.home_view, homeFragment);
         tranHomeF.commit();
 
-        binding.navHome.setCheckedItem(R.id.nav_home);
+        binding.navHome.setCheckedItem(R.id.nav_home1);
+
     }
 
     @Override
