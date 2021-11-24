@@ -80,7 +80,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_don_dat_honme"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"/>
+                        android:layout_height="match_parent"
+                        />
                 </LinearLayout>
         </androidx.cardview.widget.CardView>
 
