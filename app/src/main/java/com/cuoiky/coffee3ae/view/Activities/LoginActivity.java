@@ -149,4 +149,11 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+
+    @Override
+    protected void onRestart() {
+        binding.txtlLoginTenDN.getEditText().getText().clear();
+        binding.txtlLoginMatKhau.getEditText().getText().clear();
+        super.onRestart();
+    }
 }
