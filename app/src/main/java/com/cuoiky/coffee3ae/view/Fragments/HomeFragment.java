@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.TextView;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.FragmentHomeBinding;
@@ -29,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener{
     private ArrayList<LoaiMon> loaiMonList;
     AdapterDisplayCategory loaiMonAdapter;
 
@@ -38,6 +40,7 @@ public class HomeFragment extends Fragment {
     private DatabaseReference databaseRef;
     private DatabaseReference donDatRef;
     private FirebaseDatabase mDatabase;
+    private TextView tvAllTypeHome;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -110,6 +113,26 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        tvAllTypeHome = view.findViewById(R.id.tv_all_type_home);
+        tvAllTypeHome.setOnClickListener(this);
+
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int clickID = v.getId();
+
+        switch (clickID){
+            case R.id.tv_all_type_home:
+                FragmentTransaction tranDisplayCategory = getActivity().getSupportFragmentManager().beginTransaction();
+                tranDisplayCategory.replace(R.id.home_view, new DisplayCategoryFragment());
+                tranDisplayCategory.addToBackStack(null);
+                tranDisplayCategory.commit();
+                break;
+            default:
+                break;
+
+        }
     }
 }
