@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                     //Gửi dữ liệu sang trang chủ
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.putExtra("tendn", binding.txtlLoginTenDN.getEditText().getText().toString().trim());
-                    intent.putExtra("manv", nhanVienChecked.getTenDN());
+                    intent.putExtra("manv", nhanVienChecked.getMaNV());
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
