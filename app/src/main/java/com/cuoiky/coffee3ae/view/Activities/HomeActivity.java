@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction tranHomeF = fragmentManager.beginTransaction();
-        DisplayStatisticFragment homeFragment = new DisplayStatisticFragment();
+        HomeFragment homeFragment = new HomeFragment();
         tranHomeF.replace(R.id.home_view, homeFragment);
         tranHomeF.commit();
 
