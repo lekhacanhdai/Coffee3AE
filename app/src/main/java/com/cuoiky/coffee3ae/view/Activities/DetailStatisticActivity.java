@@ -74,7 +74,7 @@ public class DetailStatisticActivity extends AppCompatActivity {
         gvDetailStatistic.setAdapter(adapterDisplayPayment);
 
         if (madon !=0){
-            txt_detailstatistic_MaDon.setText("Mã đơn: "+madon);
+            txt_detailstatistic_MaDon.setText("Mã đơn:  "+madon);
             txt_detailstatistic_NgayDat.setText(ngaydat);
             txt_detailstatistic_TongTien.setText(tongtien+" VNĐ");
             txt_detailstatistic_TenNV.setText(nguoidat);
