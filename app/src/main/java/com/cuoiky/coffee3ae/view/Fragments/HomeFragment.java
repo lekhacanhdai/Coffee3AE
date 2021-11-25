@@ -1,5 +1,6 @@
 package com.cuoiky.coffee3ae.view.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.FragmentHomeBinding;
 import com.cuoiky.coffee3ae.model.DonDat;
 import com.cuoiky.coffee3ae.model.LoaiMon;
+import com.cuoiky.coffee3ae.view.Activities.AddCategoryActivity;
 import com.cuoiky.coffee3ae.view.Activities.HomeActivity;
 import com.cuoiky.coffee3ae.viewmodel.AdapterDisplayCategory;
 import com.cuoiky.coffee3ae.viewmodel.DonDatAdapter;
@@ -41,6 +44,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private DatabaseReference donDatRef;
     private FirebaseDatabase mDatabase;
     private TextView tvAllTypeHome;
+    private TextView tvAllThongKe;
+    private LinearLayout llThongKe;
+    private LinearLayout llBan;
+    private LinearLayout llNhanVien;
+    private LinearLayout llThemLoai;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -114,7 +122,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         });
 
         tvAllTypeHome = view.findViewById(R.id.tv_all_type_home);
+        tvAllThongKe = view.findViewById(R.id.tv_all_order_date_home);
+        llBan = view.findViewById(R.id.tv_btn_so_ban_home);
+        llThongKe = view.findViewById(R.id.tv_btn_thong_ke);
+        llNhanVien = view.findViewById(R.id.tv_btn_so_ban_home);
+        llThemLoai = view.findViewById(R.id.tv_btn_them_mon_home);
+
         tvAllTypeHome.setOnClickListener(this);
+        tvAllThongKe.setOnClickListener(this);
+        llThemLoai.setOnClickListener(this);
+        llNhanVien.setOnClickListener(this);
+        llBan.setOnClickListener(this);
+        llThongKe.setOnClickListener(this);
+
 
         return view;
     }
@@ -129,6 +149,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 tranDisplayCategory.replace(R.id.home_view, new DisplayCategoryFragment());
                 tranDisplayCategory.addToBackStack(null);
                 tranDisplayCategory.commit();
+                break;
+            case R.id.tv_btn_thong_ke:
+            case R.id.tv_all_order_date_home:
+                FragmentTransaction transOrderAll = getActivity().getSupportFragmentManager().beginTransaction();
+                transOrderAll.replace(R.id.home_view, new DisplayStatisticFragment());
+                transOrderAll.addToBackStack(null);
+                transOrderAll.commit();
+                break;
+            case R.id.tv_btn_so_ban_home:
+                break;
+            case R.id.tv_btn_them_mon_home:
+                Intent intent = new Intent(getActivity(), AddCategoryActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.tv_btn_nhan_vien_home:
+                FragmentTransaction trancNhanVien = getActivity().getSupportFragmentManager().beginTransaction();
+                trancNhanVien.replace(R.id.home_view, new DisplayStaffFrament());
+                trancNhanVien.addToBackStack(null);
+                trancNhanVien.commit();
                 break;
             default:
                 break;
