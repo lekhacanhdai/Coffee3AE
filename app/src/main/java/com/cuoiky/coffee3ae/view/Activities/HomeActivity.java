@@ -9,6 +9,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,6 +69,50 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId){
+            case R.id.nav_home1:
+                FragmentTransaction trancHome = fragmentManager.beginTransaction();
+                HomeFragment homeFragment = new HomeFragment();
+                trancHome.replace(R.id.home_view, homeFragment);
+                trancHome.commit();
+                binding.navHome.setCheckedItem(itemId);
+                binding.homeLayout.closeDrawers();
+                break;
+            case R.id.nav_statistic:
+                FragmentTransaction trancThongKe = fragmentManager.beginTransaction();
+                DisplayStatisticFragment statisticFragment = new DisplayStatisticFragment();
+                trancThongKe.replace(R.id.home_view, statisticFragment);
+                trancThongKe.commit();
+                binding.navHome.setCheckedItem(itemId);
+                binding.homeLayout.closeDrawers();
+                break;
+            case R.id.nav_table:
+                break;
+            case R.id.nav_category:
+                FragmentTransaction trancLoai = fragmentManager.beginTransaction();
+                DisplayCategoryFragment categoryFragment = new DisplayCategoryFragment();
+                trancLoai.replace(R.id.home_view, categoryFragment);
+                trancLoai.commit();
+                binding.navHome.setCheckedItem(itemId);
+                binding.homeLayout.closeDrawers();
+                break;
+            case R.id.nav_staff:
+                FragmentTransaction trancNhanVien = fragmentManager.beginTransaction();
+                DisplayStaffFrament staffFrament = new DisplayStaffFrament();
+                trancNhanVien.replace(R.id.home_view, staffFrament);
+                trancNhanVien.commit();
+                binding.navHome.setCheckedItem(itemId);
+                binding.homeLayout.closeDrawers();
+                break;
+            case R.id.nav_logout:
+                Intent intent = new Intent(HomeActivity.this, WelcomeActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+
         return false;
     }
 
