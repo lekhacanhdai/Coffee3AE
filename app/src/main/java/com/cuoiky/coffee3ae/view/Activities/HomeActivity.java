@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.ActivityHomeBinding;
@@ -29,6 +30,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ActivityHomeBinding binding;
 
     private FragmentManager fragmentManager;
+    private long pressedTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,4 +70,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
+
+
+
+
+
 }

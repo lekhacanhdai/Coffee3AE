@@ -111,6 +111,7 @@ public class RegisterActivity extends AppCompatActivity {
                 newNhanVien.setEmail(binding.txtlSignupEmail.getEditText().getText().toString());
                 newNhanVien.setGioiTinh(gioiTinh);
                 newNhanVien.setNgaySinh(ngaySinh);
+                newNhanVien.setSdt(binding.txtlSignupSDT.getEditText().getText().toString());
                 newNhanVien.setMaNV(id+1);
 
                 Log.d("in ra id", ""+ id);
