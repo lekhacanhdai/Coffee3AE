@@ -5,5 +5,9 @@
     <string name="opentoggle">Mở</string>
     <string name="closetoggle">Đóng</string>
     <string name="not_empty">Không được để trống!</string>
+    <string name="addCategory">Thêm loại</string>
+    <string name="delete_sucessful">Xóa thành công!</string>
+    <string name="delete_failed">Lỗi khi xóa!</string>
+    <string name="addMenu">Thêm thực đơn</string>
 
 </resources>

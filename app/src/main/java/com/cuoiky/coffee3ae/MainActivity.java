@@ -1,6 +1,5 @@
 package com.cuoiky.coffee3ae;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,16 +14,11 @@ import com.cuoiky.coffee3ae.model.LoaiMon;
 import com.cuoiky.coffee3ae.model.Mon;
 import com.cuoiky.coffee3ae.model.NhanVien;
 import com.cuoiky.coffee3ae.model.Quyen;
-import com.cuoiky.coffee3ae.view.Activities.DisplayCategoryActivity;
 import com.cuoiky.coffee3ae.view.Activities.HomeActivity;
-import com.cuoiky.coffee3ae.view.Activities.TestActivity;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;

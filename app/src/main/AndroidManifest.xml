@@ -33,9 +33,6 @@
             android:name=".view.Activities.HomeActivity"
             android:exported="true" />
         <activity
-            android:name=".view.Activities.DisplayCategoryActivity"
-            android:exported="true" />
-        <activity
             android:name=".view.Activities.AddStaffActivity"
             android:exported="true" />
         <activity

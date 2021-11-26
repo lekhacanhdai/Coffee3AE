@@ -15,14 +15,20 @@ import android.widget.Toast;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.AddMenuLayoutBinding;
+import com.cuoiky.coffee3ae.model.LoaiMon;
 import com.cuoiky.coffee3ae.model.Mon;
+import com.cuoiky.coffee3ae.viewmodel.DownloadImageTask;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -39,7 +45,10 @@ public class AddMenuActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private FirebaseStorage storage;
     private DatabaseReference databaseRef;
-    private static int  count = 1;
+
+    int maloai , mamon;
+    String tenloai,url,tinhtrang,tenmon,giatien;
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,18 +66,68 @@ public class AddMenuActivity extends AppCompatActivity {
         } else {
             firebaseAuth.signInAnonymously();
         }
-        binding.imgAddmenuThemHinh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent_img = new Intent();
-                intent_img.setAction(Intent.ACTION_GET_CONTENT);
-                intent_img.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent_img, "Title"), SELECT_IMAGE_CODE);
+
+        Intent intent = getIntent();
+        mamon = intent.getIntExtra("mamon",0);
+        maloai = intent.getIntExtra("maLoai",0);
+        tenloai = intent.getStringExtra("tenLoai");
+        url = intent.getStringExtra("url");
+        tinhtrang = intent.getStringExtra("tinhtrang");
+        tenmon = intent.getStringExtra("tenmon");
+        giatien = intent.getStringExtra("giatien");
+
+
+        if(mamon != 0){
+            binding.txtAddmenuTitle.setText(" Sửa Thực Đơn");
+            binding.txtlAddmenuTenMon.getEditText().setText(tenmon);
+            binding.txtlAddmenuGiaTien.getEditText().setText(giatien);
+            binding.txtlAddmenuLoaiMon.getEditText().setText(tenloai);
+            new DownloadImageTask(binding.imgAddmenuThemHinh).execute(url);
+            if(tinhtrang.equals("true")){
+                binding.rdAddmenuConMon.setChecked(true);
+            }else {
+                binding.rdAddmenuHetMon.setChecked(true);
             }
-        });
+
+            binding.btnAddmenuThemMon.setText("Sửa món");
+        }
+
+
+        binding.txtlAddmenuLoaiMon.getEditText().setText(tenloai);
+
         storage = FirebaseStorage.getInstance("gs://coffee3ae.appspot.com");
         storageRef = storage.getReferenceFromUrl("gs://coffee3ae.appspot.com/Mon");
         databaseRef = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Mon");
+
+        Query query = databaseRef.limitToLast(1);
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Mon mon = snapshot.getValue(Mon.class);
+                id = mon.getMaMon();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         binding.btnAddmenuThemMon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,16 +156,53 @@ public class AddMenuActivity extends AppCompatActivity {
                         taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                int maMon = count;
-                                int maLoai = count;
-                                String tenMon = binding.txtlAddmenuTenMon.getEditText().getText().toString();
-                                String giaTien = binding.txtlAddmenuGiaTien.getEditText().getText().toString();
-                                //  String loaiMon = binding.txtlAddmenuLoaiMon.getEditText().getText().toString();
-                                String tinhtrang = "true";
-                                //Mon mon  = new Mon(maMon,maLoai,tenMon,giaTien,tinhtrang,uri.toString());
-                               // databaseRef.child(String.valueOf(maMon)).setValue(mon);
-                                count++;
 
+                                if( !validateName() | !validatePrice()){
+                                    return;
+                                }
+                                boolean ktra ;
+                                String chucnang;
+                                if(id>0 && mamon==0){
+                                    ktra=true;
+                                    chucnang = "themmon";
+                                    id+=1;
+                                    String tenMon = binding.txtlAddmenuTenMon.getEditText().getText().toString();
+                                    String giaTien = binding.txtlAddmenuGiaTien.getEditText().getText().toString();
+                                    String tinhtrang = "true";
+                                    switch (binding.rgAddmenuTinhTrang.getCheckedRadioButtonId()){
+                                        case R.id.rd_addmenu_ConMon: tinhtrang = "true";   break;
+                                        case R.id.rd_addmenu_HetMon: tinhtrang = "false";  break;
+                                    }
+                                    LoaiMon loaiMon = new LoaiMon(maloai,tenloai,url);
+                                    Mon mon  = new Mon(id,tenMon,giaTien,tinhtrang,uri.toString(),loaiMon);
+                                    databaseRef.child(String.valueOf(id)).setValue(mon);
+                                    Intent intent = new Intent();
+                                    intent.putExtra("ktra",ktra);
+                                    intent.putExtra("chucnang",chucnang);
+                                    setResult(RESULT_OK,intent);
+                                    finish();
+                                    return;
+
+                                }
+                                if(mamon!=0){
+                                    ktra=true;
+                                    chucnang = "suamon";
+                                    String tenMon = binding.txtlAddmenuTenMon.getEditText().getText().toString();
+                                    String giaTien = binding.txtlAddmenuGiaTien.getEditText().getText().toString();
+                                    switch (binding.rgAddmenuTinhTrang.getCheckedRadioButtonId()){
+                                        case R.id.rd_addmenu_ConMon: tinhtrang = "true";   break;
+                                        case R.id.rd_addmenu_HetMon: tinhtrang = "false";  break;
+                                    }
+                                    LoaiMon loaiMon = new LoaiMon(maloai,tenloai,url);
+                                    Mon mon  = new Mon(mamon,tenMon,giaTien,tinhtrang,uri.toString(),loaiMon);
+                                    databaseRef.child(String.valueOf(mamon)).setValue(mon);
+                                    Intent intent = new Intent();
+                                    intent.putExtra("ktra",ktra);
+                                    intent.putExtra("chucnang",chucnang);
+                                    setResult(RESULT_OK,intent);
+                                    finish();
+                                     return;
+                                }
                             }
                         });
 
@@ -115,20 +211,8 @@ public class AddMenuActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-    private void signInAnonymously() {
-        firebaseAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                // do your stuff
-            }
-        })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-//                        Log.e(TAG, "signInAnonymously:FAILURE", exception);
-                    }
-                });
+        binding.imgAddmenuThemHinh.setOnClickListener(this::onClick);
+        binding.imgAddmenuBack.setOnClickListener(this::onClick);
     }
 
     @Override
@@ -146,4 +230,51 @@ public class AddMenuActivity extends AppCompatActivity {
             catch (IOException e){e.printStackTrace();}
         }
     }
+
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.img_addmenu_ThemHinh:
+                Intent intent_img = new Intent();
+                intent_img.setAction(Intent.ACTION_GET_CONTENT);
+                intent_img.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent_img, "Title"), SELECT_IMAGE_CODE);
+                break;
+
+            case R.id.img_addmenu_back:
+                finish();
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+                break;
+        }
+    }
+
+
+
+    private boolean validateName(){
+        String val = binding.txtlAddmenuTenMon.getEditText().getText().toString().trim();
+        if(val.isEmpty()){
+            binding.txtlAddmenuTenMon.setError(getResources().getString(R.string.not_empty));
+            return false;
+        }else {
+            binding.txtlAddmenuTenMon.setError(null);
+            binding.txtlAddmenuTenMon.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private boolean validatePrice(){
+        String val = binding.txtlAddmenuGiaTien.getEditText().getText().toString().trim();
+        if(val.isEmpty()){
+            binding.txtlAddmenuGiaTien.setError(getResources().getString(R.string.not_empty));
+            return false;
+        }else if(!val.matches(("\\d+(?:\\.\\d+)?"))){
+            binding.txtlAddmenuGiaTien.setError("Giá tiền không hợp lệ");
+            return false;
+        }else {
+            binding.txtlAddmenuGiaTien.setError(null);
+            binding.txtlAddmenuGiaTien.setErrorEnabled(false);
+            return true;
+        }
+    }
+    //endregion
 }
