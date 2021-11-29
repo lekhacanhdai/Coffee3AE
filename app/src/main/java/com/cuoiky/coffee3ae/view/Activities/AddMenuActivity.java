@@ -95,6 +95,9 @@ public class AddMenuActivity extends AppCompatActivity {
 
         binding.txtlAddmenuLoaiMon.getEditText().setText(tenloai);
 
+        binding.imgAddmenuThemHinh.setOnClickListener(this::onClick);
+        binding.imgAddmenuBack.setOnClickListener(this::onClick);
+
         storage = FirebaseStorage.getInstance("gs://coffee3ae.appspot.com");
         storageRef = storage.getReferenceFromUrl("gs://coffee3ae.appspot.com/Mon");
         databaseRef = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Mon");
@@ -162,13 +165,12 @@ public class AddMenuActivity extends AppCompatActivity {
                                 }
                                 boolean ktra ;
                                 String chucnang;
-                                if(id>0 && mamon==0){
+                                if(id>=0 && mamon==0){
                                     ktra=true;
                                     chucnang = "themmon";
                                     id+=1;
                                     String tenMon = binding.txtlAddmenuTenMon.getEditText().getText().toString();
                                     String giaTien = binding.txtlAddmenuGiaTien.getEditText().getText().toString();
-                                    String tinhtrang = "true";
                                     switch (binding.rgAddmenuTinhTrang.getCheckedRadioButtonId()){
                                         case R.id.rd_addmenu_ConMon: tinhtrang = "true";   break;
                                         case R.id.rd_addmenu_HetMon: tinhtrang = "false";  break;
@@ -181,7 +183,6 @@ public class AddMenuActivity extends AppCompatActivity {
                                     intent.putExtra("chucnang",chucnang);
                                     setResult(RESULT_OK,intent);
                                     finish();
-                                    return;
 
                                 }
                                 if(mamon!=0){
@@ -201,7 +202,6 @@ public class AddMenuActivity extends AppCompatActivity {
                                     intent.putExtra("chucnang",chucnang);
                                     setResult(RESULT_OK,intent);
                                     finish();
-                                     return;
                                 }
                             }
                         });
@@ -211,8 +211,7 @@ public class AddMenuActivity extends AppCompatActivity {
                 });
             }
         });
-        binding.imgAddmenuThemHinh.setOnClickListener(this::onClick);
-        binding.imgAddmenuBack.setOnClickListener(this::onClick);
+
     }
 
     @Override

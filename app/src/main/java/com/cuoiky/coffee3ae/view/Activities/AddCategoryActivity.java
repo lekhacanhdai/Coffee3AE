@@ -151,7 +151,7 @@ public class AddCategoryActivity extends AppCompatActivity {
                                 String chucnang;
                                 boolean ktra;
 
-                                if(id > 0 && maloai==0)
+                                if(id >= 0 && maloai==0)
                                 {
                                     ktra = true;
                                     chucnang = "themloai";

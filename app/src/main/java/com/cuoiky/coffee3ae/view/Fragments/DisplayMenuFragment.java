@@ -109,8 +109,6 @@ public class DisplayMenuFragment extends Fragment {
         databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Mon");
         listMon = new ArrayList<Mon>();
         HienThiDSMon();
-
-
         setHasOptionsMenu(true);
         registerForContextMenu(gvDisplayMenu);
         view.setOnKeyListener(new View.OnKeyListener() {
