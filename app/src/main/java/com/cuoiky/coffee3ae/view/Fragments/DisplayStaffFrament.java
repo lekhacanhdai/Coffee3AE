@@ -9,7 +9,9 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.ContextMenu;
@@ -45,8 +47,7 @@ public class DisplayStaffFrament extends Fragment {
     ArrayList<NhanVien> nhanVienList;
     AdapterDisplayStaff adapterDisplayStaff;
     private DatabaseReference databaseReference;
-
-
+    FragmentManager fragmentManager;
 
 
     ActivityResultLauncher<Intent> resultLauncherAdd = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -87,10 +88,12 @@ public class DisplayStaffFrament extends Fragment {
         setHasOptionsMenu(true);
         gvStaff = (GridView)view.findViewById(R.id.gvStaff) ;
 
+
         databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("NhanVien");
         nhanVienList = new ArrayList<NhanVien>();
 
         HienThiDSNV();
+        registerForContextMenu(gvStaff);
 
         return view;
     }
@@ -106,25 +109,44 @@ public class DisplayStaffFrament extends Fragment {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int vitri = menuInfo.position;
         int manv = nhanVienList.get(vitri).getMaNV();
+        NhanVien nhanVienEdit = nhanVienList.get(vitri);
+
 
         switch (id){
             case R.id.itEdit:
                 Intent iEdit = new Intent(getActivity(),AddStaffActivity.class);
                 iEdit.putExtra("manv",manv);
+                iEdit.putExtra("hoten", nhanVienEdit.getHoTenNV());
+                iEdit.putExtra("tendn", nhanVienEdit.getTenDN());
+                iEdit.putExtra("matkhau", nhanVienEdit.getMatKhau());
+                iEdit.putExtra("sdt", nhanVienEdit.getSdt());
+                iEdit.putExtra("ngaysinh", nhanVienEdit.getNgaySinh());
+                iEdit.putExtra("maquyen", nhanVienEdit.getQuyen().getMaQuyen());
+                iEdit.putExtra("gioitinh", nhanVienEdit.getGioiTinh());
+                iEdit.putExtra("email", nhanVienEdit.getEmail());
+
                 resultLauncherAdd.launch(iEdit);
                 break;
 
             case R.id.itDelete:
 //                boolean ktra = nhanVienDAO.XoaNV(manv);
-                boolean ktra = true;
-                if(ktra){
+                databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("NhanVien");
+                databaseReference.child(String.valueOf(manv)).removeValue(new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_sucessful)
+                                ,Toast.LENGTH_SHORT).show();
+                    }
+                });
+                HienThiDSNV();
+                /*if(ktra){
                     HienThiDSNV();
                     Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_sucessful)
                             ,Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.delete_failed)
                             ,Toast.LENGTH_SHORT).show();
-                }
+                }*/
                 break;
         }
         return true;
@@ -137,6 +159,9 @@ public class DisplayStaffFrament extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (nhanVienList != null){
+                    nhanVienList.clear();
+                }
                 for(DataSnapshot item:snapshot.getChildren())
                 {
                     NhanVien data = item.getValue(NhanVien.class);

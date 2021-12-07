@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -42,7 +43,16 @@ public class AddStaffActivity extends AppCompatActivity implements View.OnClickL
                     ".{6,}" +                // at least 4 characters
                     "$");
     int manv = 0, quyen = 0;
-    long ktra = 0;
+    long ktra;
+    int id;
+    String tendn;
+    String matkhau;
+    String ngaysinh;
+    String gioitinh;
+    String email;
+    String sdt;
+    int maquyen;
+    String hoten;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +62,29 @@ public class AddStaffActivity extends AppCompatActivity implements View.OnClickL
         setContentView(viewRoot);
         database = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/");
         mDatabase = database.getReference("NhanVien");
-        listNV.clear();
+        listNV = new ArrayList<NhanVien>();
+
+        manv = getIntent().getIntExtra("manv", 0);  //Lay ma nhan vien tu displaystaff
+        tendn = getIntent().getStringExtra("tendn");
+        matkhau = getIntent().getStringExtra("matkhau");
+        email = getIntent().getStringExtra("email");
+        sdt = getIntent().getStringExtra("sdt");
+        ngaysinh = getIntent().getStringExtra("ngaysinh");
+        gioitinh = getIntent().getStringExtra("gioitinh");
+        hoten = getIntent().getStringExtra("hoten");
+        maquyen = getIntent().getIntExtra("maquyen",2);
 
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (listNV != null){
+                    listNV.clear();
+                }
                 for (DataSnapshot item:snapshot.getChildren()){
                     NhanVien nhanVien = item.getValue(NhanVien.class);
                     listNV.add(nhanVien);
+                    idLast = nhanVien.getMaNV();
                 }
             }
 
@@ -69,37 +93,66 @@ public class AddStaffActivity extends AppCompatActivity implements View.OnClickL
 
             }
         });
+//        Query query = mDatabase.limitToLast(1);
+//        query.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                NhanVien nhanVien = snapshot.getValue(NhanVien.class);
+//                idLast = nhanVien.getMaNV();
+//                Log.d("trong query", ""+idLast);
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
 
 
-        manv = getIntent().getIntExtra("manv", 0);  //Lay ma nhan vien tu displaystaff
+
         if (manv != 0){
             binding.txtAddstaffTitle.setText("Sửa nhân viên");
-            NhanVien editNhanVien = listNV.get(manv);
+//            NhanVien editNhanVien = listNV.get(manv);
 
             //Hien thi thong tin nhan vien
-            binding.txtlAddstaffHoVaTen.getEditText().setText(editNhanVien.getHoTenNV());
-            binding.txtlAddstaffTenDN.getEditText().setText(editNhanVien.getTenDN());
-            binding.txtlAddstaffMatKhau.getEditText().setText(editNhanVien.getMatKhau());
-            binding.txtlAddstaffEmail.getEditText().setText(editNhanVien.getEmail());
-            binding.txtlAddstaffSDT.getEditText().setText(editNhanVien.getSdt());
-            String gioiTinh = editNhanVien.getGioiTinh();
-            if (gioiTinh.equals("Nam")){
+            binding.txtlAddstaffHoVaTen.getEditText().setText(hoten);
+            binding.txtlAddstaffTenDN.getEditText().setText(tendn);
+            binding.txtlAddstaffMatKhau.getEditText().setText(matkhau);
+            binding.txtlAddstaffEmail.getEditText().setText(email);
+            binding.txtlAddstaffSDT.getEditText().setText(sdt);
+//            String gioiTinh = editNhanVien.getGioiTinh();
+            if (gioitinh.equals("Nam")){
                 binding.rdAddstaffNam.setChecked(true);
-            } else if (gioiTinh.equals("Nữ")){
+            } else if (gioiTinh.equals("Nu")){
                  binding.rdAddstaffNu.setChecked(true);
             } else {
                 binding.rdAddstaffKhac.setChecked(true);
             }
 
-            if (editNhanVien.getQuyen().getMaQuyen() == 1){
+            if (maquyen == 1){
                 binding.rdAddstaffQuanLy.setChecked(true);
             } else {
                 binding.rdAddstaffNhanVien.setChecked(true);
             }
 
             // Hien thi ngay sinh
-            String date = editNhanVien.getNgaySinh();
+            String date = ngaysinh;
             String[] items = date.split("/");
             int day = Integer.parseInt(items[0]);
             int month = Integer.parseInt(items[1]);
@@ -108,8 +161,8 @@ public class AddStaffActivity extends AppCompatActivity implements View.OnClickL
             binding.btnAddstaffThemNV.setText("Sửa nhân viên");
         }
 
-        binding.btnAddstaffThemNV.setOnClickListener(this);
-        binding.imgAddstaffBack.setOnClickListener(this);
+        binding.btnAddstaffThemNV.setOnClickListener(this::onClick);
+        binding.imgAddstaffBack.setOnClickListener(this::onClick);
     }
 
     @Override
@@ -137,14 +190,15 @@ public class AddStaffActivity extends AppCompatActivity implements View.OnClickL
                 } else if ( binding.rdAddstaffQuanLy.isChecked() == true){
                     editQuyen = new Quyen(1, "Quan ly");
                 }
-                switch (binding.rgAddstaffGioiTinh.getCheckedRadioButtonId()){
-                    case R.id.rd_signup_Nam:
-                        gioiTinh = "Nam"; break;
-                    case R.id.rd_signup_Nu:
-                        gioiTinh = "Nữ"; break;
-                    case R.id.rd_signup_Khac:
-                        gioiTinh = "Khác"; break;
+
+                if (binding.rdAddstaffNam.isChecked() == true){
+                    gioiTinh = "Nam";
+                } else if (binding.rdAddstaffNu.isChecked() == true){
+                    gioiTinh = "Nu";
+                } else if ( binding.rdAddstaffKhac.isChecked() == true){
+                    gioiTinh = "Khac";
                 }
+
                 NhanVien editNhanVien = new NhanVien();
                 editNhanVien.setMaNV(manv);
                 editNhanVien.setHoTenNV(hoTen);
@@ -156,60 +210,36 @@ public class AddStaffActivity extends AppCompatActivity implements View.OnClickL
                 editNhanVien.setNgaySinh(ngaySinh);
                 editNhanVien.setTenDN(tenDN);
                 if (manv != 0){
-                    mDatabase.child(String.valueOf(manv)).setValue(editNhanVien).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mDatabase.child(Integer.toString(manv)).setValue(editNhanVien).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            ktra = 1;
                         }
                     });
+                    ktra = manv;
                     chucnang = "sua";
                 } else {
-                    ktra = 0;
-                    Query query = mDatabase.limitToLast(1);
-                    query.addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                            NhanVien nhanVien = snapshot.getValue(NhanVien.class);
-                            idLast = nhanVien.getMaNV();
-                        }
 
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                        }
-
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    int set = idLast;
-                    mDatabase.child(String.valueOf(idLast+1)).setValue(editNhanVien).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    editNhanVien.setMaNV(idLast+1);
+                    mDatabase.child(Integer.toString(idLast+1)).setValue(editNhanVien).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            ktra = 0;
                         }
                     });
+                    ktra = idLast + 1;
                     chucnang = "themnv";
                 }
+
+                Log.d("Kiem tra", ""+ktra);
+                Log.d("chuc nang", ""+chucnang);
                 Intent intent = new Intent();
-                intent.putExtra("ketquakiemtra", ktra);
+                intent.putExtra("ketquaktra", ktra);
                 intent.putExtra("chucnang", chucnang);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
-            case R.id.img_addcategory_back:
+            case R.id.img_addstaff_back:
                 finish();
+                Log.d("noti", "back lai");
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;
         }
