@@ -45,7 +45,7 @@ public class AddTableActivity extends AppCompatActivity {
             firebaseAuth.signInAnonymously();
         }
 
-        //region Lấy đối tượng trong view
+        
         TXTL_addtable_tenban = (TextInputLayout)findViewById(R.id.txtl_addtable_tenban);
         BTN_addtable_TaoBan = (Button)findViewById(R.id.btn_addtable_TaoBan);
 
