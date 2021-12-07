@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         tvAllThongKe = view.findViewById(R.id.tv_all_order_date_home);
         llBan = view.findViewById(R.id.tv_btn_so_ban_home);
         llThongKe = view.findViewById(R.id.tv_btn_thong_ke);
-        llNhanVien = view.findViewById(R.id.tv_btn_so_ban_home);
+        llNhanVien = view.findViewById(R.id.tv_btn_nhan_vien_home);
         llThemLoai = view.findViewById(R.id.tv_btn_them_mon_home);
 
         tvAllTypeHome.setOnClickListener(this);
