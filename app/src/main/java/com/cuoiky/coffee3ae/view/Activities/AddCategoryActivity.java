@@ -16,13 +16,21 @@ import android.widget.Toast;
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.AddCategoryLayoutBinding;
 import com.cuoiky.coffee3ae.model.LoaiMon;
+import com.cuoiky.coffee3ae.model.NhanVien;
+import com.cuoiky.coffee3ae.view.Fragments.DisplayCategoryFragment;
+import com.cuoiky.coffee3ae.viewmodel.DownloadImageTask;
+import com.firebase.ui.database.FirebaseArray;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -38,7 +46,11 @@ public class AddCategoryActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private FirebaseStorage storage;
     private DatabaseReference databaseRef;
-    private static int  count = 1;
+    private int  id ;
+    int maloai = 0;
+    String url ;
+    String tenloai;
+    Bitmap bitmapold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,18 +67,56 @@ public class AddCategoryActivity extends AppCompatActivity {
         } else {
             firebaseAuth.signInAnonymously();
         }
-        binding.imgAddcategoryThemHinh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent_img = new Intent();
-                intent_img.setAction(Intent.ACTION_GET_CONTENT);
-                intent_img.setType("image/*");
-                startActivityForResult(Intent.createChooser(intent_img, "Title"), SELECT_IMAGE_CODE);
-            }
-        });
+
+        maloai = getIntent().getIntExtra("maloai",0);
+        tenloai = getIntent().getStringExtra("tenloai");
+        url = getIntent().getStringExtra("url");
+        if(maloai!=0)
+        {
+            binding.txtlAddcategoryTenLoai.getEditText().setText(tenloai);
+            new DownloadImageTask(binding.imgAddcategoryThemHinh).execute(url);
+            binding.txtAddcategoryTitle.setText("Sửa loại");
+
+        }
+
+        binding.imgAddcategoryBack.setOnClickListener(this::onClick);
+        binding.imgAddcategoryThemHinh.setOnClickListener(this::onClick);
+
         storage = FirebaseStorage.getInstance("gs://coffee3ae.appspot.com");
         storageRef = storage.getReferenceFromUrl("gs://coffee3ae.appspot.com/LoaiMon");
         databaseRef = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("LoaiMon");
+
+
+        Query query = databaseRef.limitToLast(1);
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                LoaiMon loaiMon = snapshot.getValue(LoaiMon.class);
+                id = loaiMon.getMaLoai();
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         binding.btnAddcategoryTaoLoai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,12 +145,41 @@ public class AddCategoryActivity extends AppCompatActivity {
                         taskSnapshot.getStorage().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                int maloai = count;
-                                String TenLoai = binding.txtlAddcategoryTenLoai.getEditText().getText().toString();
-                                LoaiMon loaiMon = new LoaiMon(maloai,TenLoai,uri.toString());
-                                // String uploadId = databaseRef.push().getKey();
-                                databaseRef.child(String.valueOf(maloai)).setValue(loaiMon);
-                                count++;
+                                if(!validateImage() || !validateName()){
+                                    return;
+                                }
+                                String chucnang;
+                                boolean ktra;
+
+                                if(id >= 0 && maloai==0)
+                                {
+                                    ktra = true;
+                                    chucnang = "themloai";
+                                    id += 1;
+                                    String TenLoai = binding.txtlAddcategoryTenLoai.getEditText().getText().toString();
+                                    LoaiMon loaiMon = new LoaiMon(id,TenLoai,uri.toString());
+                                    databaseRef.child(String.valueOf(id)).setValue(loaiMon);
+                                    Intent intent = new Intent();
+                                    intent.putExtra("ktra",ktra);
+                                    intent.putExtra("chucnang",chucnang);
+                                    setResult(RESULT_OK,intent);
+                                    finish();
+
+                                }
+                                if(maloai!=0)
+                                {
+                                    ktra = true;
+                                    chucnang = "sualoai";
+                                    String TenLoai = binding.txtlAddcategoryTenLoai.getEditText().getText().toString();
+                                    LoaiMon loaiMon = new LoaiMon(maloai,TenLoai,uri.toString());
+                                    databaseRef.child(String.valueOf(maloai)).setValue(loaiMon);
+                                    Intent intent = new Intent();
+                                    intent.putExtra("ktra",ktra);
+                                    intent.putExtra("chucnang",chucnang);
+                                    setResult(RESULT_OK,intent);
+                                    finish();
+
+                                }
 
                             }
                         });
@@ -110,20 +189,6 @@ public class AddCategoryActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-    private void signInAnonymously() {
-        firebaseAuth.signInAnonymously().addOnSuccessListener(this, new  OnSuccessListener<AuthResult>() {
-            @Override
-            public void onSuccess(AuthResult authResult) {
-                // do your stuff
-            }
-        })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-//                        Log.e(TAG, "signInAnonymously:FAILURE", exception);
-                    }
-                });
     }
 
     @Override
@@ -141,6 +206,50 @@ public class AddCategoryActivity extends AppCompatActivity {
             catch (IOException e){e.printStackTrace();}
         }
     }
+
+
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.img_addcategory_back:
+                finish();
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right); //animation
+                break;
+
+            case R.id.img_addcategory_ThemHinh:
+                Intent intent_img = new Intent();
+                intent_img.setAction(Intent.ACTION_GET_CONTENT);
+                intent_img.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent_img, "Title"), SELECT_IMAGE_CODE);    //mở intent chọn hình ảnh
+                break;
+        }
+    }
+
+    //region validate fields
+    private boolean validateImage(){
+        BitmapDrawable drawable = (BitmapDrawable)binding.imgAddcategoryThemHinh.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
+
+        if(bitmap == bitmapold){
+            Toast.makeText(getApplicationContext(),"Xin chọn hình ảnh",Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    private boolean validateName(){
+        String val = binding.txtlAddcategoryTenLoai.getEditText().getText().toString().trim();
+        if(val.isEmpty()){
+            binding.txtlAddcategoryTenLoai.setError(getResources().getString(R.string.not_empty));
+            return false;
+        }else {
+            binding.txtlAddcategoryTenLoai.setError(null);
+            binding.txtlAddcategoryTenLoai.setErrorEnabled(false);
+            return true;
+        }
+    }
+
 
 
 }

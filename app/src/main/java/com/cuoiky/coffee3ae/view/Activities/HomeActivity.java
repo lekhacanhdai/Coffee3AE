@@ -82,7 +82,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_statistic:
                 FragmentTransaction trancThongKe = fragmentManager.beginTransaction();
                 DisplayStatisticFragment statisticFragment = new DisplayStatisticFragment();
-                trancThongKe.replace(R.id.home_view, statisticFragment);
+                trancThongKe.replace(R.id.home_view, statisticFragment).addToBackStack(null);
                 trancThongKe.commit();
                 binding.navHome.setCheckedItem(itemId);
                 binding.homeLayout.closeDrawers();
@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_category:
                 FragmentTransaction trancLoai = fragmentManager.beginTransaction();
                 DisplayCategoryFragment categoryFragment = new DisplayCategoryFragment();
-                trancLoai.replace(R.id.home_view, categoryFragment);
+                trancLoai.replace(R.id.home_view, categoryFragment).addToBackStack(null);
                 trancLoai.commit();
                 binding.navHome.setCheckedItem(itemId);
                 binding.homeLayout.closeDrawers();
@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_staff:
                 FragmentTransaction trancNhanVien = fragmentManager.beginTransaction();
                 DisplayStaffFrament staffFrament = new DisplayStaffFrament();
-                trancNhanVien.replace(R.id.home_view, staffFrament);
+                trancNhanVien.replace(R.id.home_view, staffFrament).addToBackStack(null);
                 trancNhanVien.commit();
                 binding.navHome.setCheckedItem(itemId);
                 binding.homeLayout.closeDrawers();

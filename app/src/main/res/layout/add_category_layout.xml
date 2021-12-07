@@ -13,6 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+       android:layout_marginTop="10dp"
     >
         <ImageView
             android:id="@+id/img_addcategory_back"
@@ -41,7 +42,6 @@
         android:textStyle=""
         android:textColor="@color/black"
         android:textAllCaps="true"
-        android:layout_marginTop="20dp"
         />
 
     <androidx.cardview.widget.CardView
