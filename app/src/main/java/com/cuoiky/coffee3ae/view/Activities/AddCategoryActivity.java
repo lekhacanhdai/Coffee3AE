@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 public class AddCategoryActivity extends AppCompatActivity {
+
     private AddCategoryLayoutBinding binding;
     private FirebaseAuth firebaseAuth;
     private final int SELECT_IMAGE_CODE = 1;

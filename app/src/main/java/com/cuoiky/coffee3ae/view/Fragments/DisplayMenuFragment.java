@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.DisplayMenuLayoutBinding;
+import com.cuoiky.coffee3ae.model.LoaiMon;
 import com.cuoiky.coffee3ae.model.Mon;
 import com.cuoiky.coffee3ae.view.Activities.AddMenuActivity;
 import com.cuoiky.coffee3ae.view.Activities.HomeActivity;
@@ -211,7 +212,11 @@ public class DisplayMenuFragment extends Fragment {
                 for(DataSnapshot item:snapshot.getChildren())
                 {
                     Mon data = item.getValue(Mon.class);
-                    listMon.add(data);
+                    if(data.getLoaiMon().getMaLoai() == maloai)
+                    {
+                        listMon.add(data);
+                    }
+
 
                 }
                 listMonAdapter.notifyDataSetChanged();
