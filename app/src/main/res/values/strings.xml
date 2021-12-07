@@ -9,5 +9,8 @@
     <string name="delete_sucessful">Xóa thành công!</string>
     <string name="delete_failed">Lỗi khi xóa!</string>
     <string name="addMenu">Thêm thực đơn</string>
+    <string name="addTable">Thêm bàn ăn</string>
+    <string name="edit_sucessful">Sửa thành công!</string>
+    <string name="edit_failed">Lỗi khi sửa!</string>
 
 </resources>

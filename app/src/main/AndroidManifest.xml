@@ -4,10 +4,10 @@
     package="com.cuoiky.coffee3ae">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Coffee3AE"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.Activities.AddTableActivity"
+            android:exported="true" />
         <activity
             android:name=".view.Activities.DetailStatisticActivity"
             android:exported="true" />

@@ -23,6 +23,7 @@ import com.cuoiky.coffee3ae.view.Fragments.BlankFragment;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayCategoryFragment;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayStaffFrament;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayStatisticFragment;
+import com.cuoiky.coffee3ae.view.Fragments.DisplayTableFragment;
 import com.cuoiky.coffee3ae.view.Fragments.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
