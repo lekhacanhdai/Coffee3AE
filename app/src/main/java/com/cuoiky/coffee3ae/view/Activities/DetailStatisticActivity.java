@@ -111,6 +111,8 @@ public class DetailStatisticActivity extends AppCompatActivity {
             }
         });
 
+
+
     }
 
 }

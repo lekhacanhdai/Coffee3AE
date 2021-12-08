@@ -180,7 +180,7 @@ public class Amount_Menu_Activity extends AppCompatActivity {
                                  soluong = Integer.parseInt(TXTL_amountmenu_SoLuong.getEditText().getText().toString());
                                  tongtien = String.valueOf(giatien*soluong);
                                  id+=1;
-                                 String tinhtrang = "true";
+                                 String tinhtrang = "false";
                                  DonDat donDat = new DonDat(id,tinhtrang,ngaydat,tongtien,  banAn1[0],nhanVien1[0]);
                                  ChiTietDonDat chiTietDonDat = new ChiTietDonDat(soluong,mon1[0],donDat);
                                  dataRef_detail.child(String.valueOf(id)).setValue(chiTietDonDat);
