@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -19,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -109,6 +111,7 @@ public class DisplayTableFragment extends Fragment {
         listBanAn = new ArrayList<BanAn>();
         HienThiDSBan();
 
+        registerForContextMenu(gridView);
         return view;
     }
     //tạo ra context menu khi longclick
@@ -117,6 +120,36 @@ public class DisplayTableFragment extends Fragment {
         super.onCreateContextMenu(menu, v, menuInfo);
         getActivity().getMenuInflater().inflate(R.menu.edit_context_menu,menu);
     }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int vitri = menuInfo.position;
+        int maban = listBanAn.get(vitri).getMaBan();
+        String tenBan = listBanAn.get(vitri).getTenBan();
+        switch(id){
+            case R.id.itEdit:
+                Intent intent = new Intent(getActivity(), AddTableActivity.class);
+                intent.putExtra("maban",maban);
+                intent.putExtra("tenban",tenBan);
+                resultLauncherEdit.launch(intent);
+                break;
+
+            case R.id.itDelete:
+                String delete = "BanAn"+"/"+maban;
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/");
+                databaseReference = database.getReference(delete);
+                databaseReference.removeValue(new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(getActivity(),"Xóa thành công",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

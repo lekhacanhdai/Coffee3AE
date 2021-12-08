@@ -32,6 +32,8 @@ public class AddTableActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private int  id ;
     private boolean duocChon = false;
+    private String tenBan;
+    private int maBan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +47,15 @@ public class AddTableActivity extends AppCompatActivity {
             firebaseAuth.signInAnonymously();
         }
 
-        
         TXTL_addtable_tenban = (TextInputLayout)findViewById(R.id.txtl_addtable_tenban);
         BTN_addtable_TaoBan = (Button)findViewById(R.id.btn_addtable_TaoBan);
+
+        maBan = getIntent().getIntExtra("maban",0);
+        tenBan = getIntent().getStringExtra("tenban");
+        if(maBan!=0){
+            TXTL_addtable_tenban.getEditText().setText(tenBan);
+            BTN_addtable_TaoBan.setText("Sua Ban");
+        }
 
         databaseRef = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("BanAn");
 
@@ -86,15 +94,24 @@ public class AddTableActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String TenBanAn = TXTL_addtable_tenban.getEditText().getText().toString();
-                if(TenBanAn != null || TenBanAn.equals("")){
+                if((TenBanAn != null || TenBanAn.equals(""))&&(id>=0 && maBan==0)){
                     id += 1;
                     banAn = new BanAn(id,TenBanAn,duocChon);
                     databaseRef.child(String.valueOf(id)).setValue(banAn);
 
-                   // boolean ktra = banAnDAO.ThemBanAn(sTenBanAn);
+                    boolean ktra = true;
                     //trả về result cho displaytable
                     Intent intent = new Intent();
-                   // intent.putExtra("ketquathem",ktra);
+                    intent.putExtra("ketquathem",ktra);
+                    setResult(RESULT_OK,intent);
+                    finish();
+                }
+                if(maBan!=0){
+                    banAn = new BanAn(maBan,TenBanAn,duocChon);
+                    databaseRef.child(String.valueOf(maBan)).setValue(banAn);
+                    boolean ktra = true;
+                    Intent intent = new Intent();
+                    intent.putExtra("ketquasua",ktra);
                     setResult(RESULT_OK,intent);
                     finish();
                 }
