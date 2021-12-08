@@ -43,7 +43,7 @@ public class DisplayCategoryFragment extends Fragment {
     private AdapterDisplayCategory1 loaiMonAdapter;
     private GridView gridView;
     FragmentManager fragmentManager;
-    int maban;
+    int maban,manv;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,6 +94,7 @@ public class DisplayCategoryFragment extends Fragment {
         Bundle bDataCategory = getArguments();
         if(bDataCategory != null){
             maban = bDataCategory.getInt("maban");
+            manv = bDataCategory.getInt("manv");
         }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,6 +108,8 @@ public class DisplayCategoryFragment extends Fragment {
                 bundle.putInt("maloai",maloai);
                 bundle.putString("url",url);
                 bundle.putString("tenloai",tenLoai);
+                bundle.putInt("maban",maban);
+                bundle.putInt("manv",manv);
                 displayMenuFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = fragmentManager.beginTransaction();

@@ -2,6 +2,8 @@ package com.cuoiky.coffee3ae.viewmodel;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.model.BanAn;
 import com.cuoiky.coffee3ae.model.DonDat;
 import com.cuoiky.coffee3ae.view.Activities.HomeActivity;
 import com.cuoiky.coffee3ae.view.Activities.PaymentActivity;
+import com.cuoiky.coffee3ae.view.Fragments.DisplayCategoryFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -128,7 +132,19 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
                 int manv = getIHome.getIntExtra("manv",0);
                 boolean tinhtrang =listBanAn.get(vitri1).isDuocChon();
 
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                DisplayCategoryFragment displayCategoryFragment = new DisplayCategoryFragment();
 
+                Bundle bDataCategory = new Bundle();
+                bDataCategory.putInt("maban",maban);
+                bDataCategory.putInt("manv",manv);
+                bDataCategory.putBoolean("tinhtrang",tinhtrang);
+                Log.d("adapter", ""+manv);
+                displayCategoryFragment.setArguments(bDataCategory);
+
+                transaction.replace(R.id.home_view,displayCategoryFragment).addToBackStack("hienthibanan");
+                transaction.commit();
+                break;
 
 
             case R.id.img_customtable_ThanhToan:

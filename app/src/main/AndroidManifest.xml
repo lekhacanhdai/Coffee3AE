@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Coffee3AE"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".view.Activities.Amount_Menu_Activity"
+            android:exported="true" />
+        <activity
             android:name=".view.Activities.AddTableActivity"
             android:exported="true" />
         <activity

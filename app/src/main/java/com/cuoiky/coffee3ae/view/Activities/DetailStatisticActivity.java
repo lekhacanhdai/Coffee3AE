@@ -87,7 +87,11 @@ public class DetailStatisticActivity extends AppCompatActivity {
                 for(DataSnapshot item:snapshot.getChildren())
                 {
                     ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
-                    listChiTietDonDat.add(data);
+                    if(data.getDonDat().getMaDonDat()==madon)
+                    {
+                        listChiTietDonDat.add(data);
+                    }
+
 
                 }
                 adapterDisplayPayment.notifyDataSetChanged();

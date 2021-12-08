@@ -3,6 +3,7 @@ package com.cuoiky.coffee3ae.view.Fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import com.cuoiky.coffee3ae.databinding.DisplayMenuLayoutBinding;
 import com.cuoiky.coffee3ae.model.LoaiMon;
 import com.cuoiky.coffee3ae.model.Mon;
 import com.cuoiky.coffee3ae.view.Activities.AddMenuActivity;
+import com.cuoiky.coffee3ae.view.Activities.Amount_Menu_Activity;
 import com.cuoiky.coffee3ae.view.Activities.HomeActivity;
 import com.cuoiky.coffee3ae.viewmodel.AdapterDisplayMenu1;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +43,7 @@ import java.util.ArrayList;
 
 public class DisplayMenuFragment extends Fragment {
 
-    int maloai, maban;
+    int maloai, maban,manv;
     String tenloai,tinhtrang,url,tenmon,giatien;
     GridView gvDisplayMenu;
 
@@ -104,12 +106,33 @@ public class DisplayMenuFragment extends Fragment {
             tenloai = bundle.getString("tenloai");
             url = bundle.getString("url");
             maban = bundle.getInt("maban");
-        }
+            manv = bundle.getInt("manv");
 
-        gvDisplayMenu = view.findViewById(R.id.gvDisplayMenu);
-        databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Mon");
-        listMon = new ArrayList<Mon>();
-        HienThiDSMon();
+            gvDisplayMenu = view.findViewById(R.id.gvDisplayMenu);
+            databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Mon");
+            listMon = new ArrayList<Mon>();
+            HienThiDSMon();
+            gvDisplayMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    tinhtrang = listMon.get(position).getTinhTrang();
+                   // Log.d("taggg", ""+tinhtrang);
+                    if(maban != 0){
+                        if(tinhtrang.equals("true")){
+                            Intent iAmount = new Intent(getActivity(), Amount_Menu_Activity.class);
+                            iAmount.putExtra("maban",maban);
+                            iAmount.putExtra("mamon",listMon.get(position).getMaMon());
+                            iAmount.putExtra("manv",manv);
+                            Log.d("menu", ""+manv);
+                            startActivity(iAmount);
+                        }else {
+                            Toast.makeText(getActivity(),"Món đã hết, không thể thêm", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                }
+            });
+        }
         setHasOptionsMenu(true);
         registerForContextMenu(gvDisplayMenu);
         view.setOnKeyListener(new View.OnKeyListener() {

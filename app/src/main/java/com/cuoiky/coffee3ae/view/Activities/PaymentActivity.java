@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.model.BanAn;
@@ -46,6 +48,21 @@ public class PaymentActivity extends AppCompatActivity {
         TXT_payment_TongTien = (TextView)findViewById(R.id.txt_payment_TongTien);
         BTN_payment_ThanhToan = (Button)findViewById(R.id.btn_payment_ThanhToan);
 
+        BTN_payment_ThanhToan.setOnClickListener(this::onClick);
+        IMG_payment_backbtn.setOnClickListener(this::onClick);
 
+    }
+
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.btn_payment_ThanhToan:
+
+
+                break;
+            case R.id.img_payment_backbtn:
+                finish();
+                break;
+        }
     }
 }
