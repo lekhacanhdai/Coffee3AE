@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.model.BanAn;
+import com.cuoiky.coffee3ae.model.ChiTietDonDat;
 import com.cuoiky.coffee3ae.model.DonDat;
 import com.cuoiky.coffee3ae.model.NhanVien;
 
@@ -20,12 +21,12 @@ public class AdapterDisplayStatistic extends BaseAdapter {
 
     Context context;
     int layout;
-    ArrayList<DonDat> listDonDat;
+    ArrayList<ChiTietDonDat> listDonDat;
     ViewHolder viewHolder;
     NhanVien nhanVien;
     BanAn banAn;
 
-    public AdapterDisplayStatistic(Context context, int layout, ArrayList<DonDat> listDonDat) {
+    public AdapterDisplayStatistic(Context context, int layout, ArrayList<ChiTietDonDat> listDonDat) {
         this.context = context;
         this.layout = layout;
         this.listDonDat = listDonDat;
@@ -45,7 +46,7 @@ public class AdapterDisplayStatistic extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return listDonDat.get(position).getMaDonDat();
+        return listDonDat.get(position).getDonDat().getMaDonDat();
     }
 
     @Override
@@ -66,7 +67,7 @@ public class AdapterDisplayStatistic extends BaseAdapter {
         }else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        DonDat donDatDTO = listDonDat.get(position);
+        DonDat donDatDTO = listDonDat.get(position).getDonDat();
 
         viewHolder.txt_customstatistic_MaDon.setText("Mã đơn: "+donDatDTO.getMaDonDat());
         viewHolder.txt_customstatistic_NgayDat.setText(donDatDTO.getNgayDat());

@@ -9,8 +9,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -25,6 +28,7 @@ import com.cuoiky.coffee3ae.view.Fragments.DisplayStaffFrament;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayStatisticFragment;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayTableFragment;
 import com.cuoiky.coffee3ae.view.Fragments.HomeFragment;
+import com.cuoiky.coffee3ae.viewmodel.AdapterDisplayTable;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -33,6 +37,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private FragmentManager fragmentManager;
     private long pressedTime;
+    private int manv;
+    int maquyen = 0;
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +61,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onDrawerClosed(View drawerView) {    super.onDrawerClosed(drawerView); }
         };
+        Intent intent = getIntent();
+        manv = intent.getIntExtra("manv",0);
+        Log.d("manv_homeActivity", ""+manv);
 
         binding.homeLayout.addDrawerListener(drawerToggle);
 

@@ -123,7 +123,6 @@ public class DisplayMenuFragment extends Fragment {
                             iAmount.putExtra("maban",maban);
                             iAmount.putExtra("mamon",listMon.get(position).getMaMon());
                             iAmount.putExtra("manv",manv);
-                            Log.d("menu", ""+manv);
                             startActivity(iAmount);
                         }else {
                             Toast.makeText(getActivity(),"Món đã hết, không thể thêm", Toast.LENGTH_SHORT).show();

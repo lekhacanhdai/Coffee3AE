@@ -3,6 +3,7 @@ package com.cuoiky.coffee3ae.view.Fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -110,6 +111,7 @@ public class DisplayCategoryFragment extends Fragment {
                 bundle.putString("tenloai",tenLoai);
                 bundle.putInt("maban",maban);
                 bundle.putInt("manv",manv);
+                Log.d("Ma_nv_catalogy", ""+manv);
                 displayMenuFragment.setArguments(bundle);
 
                 FragmentTransaction transaction = fragmentManager.beginTransaction();

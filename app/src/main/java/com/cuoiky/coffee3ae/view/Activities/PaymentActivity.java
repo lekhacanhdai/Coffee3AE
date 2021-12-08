@@ -19,8 +19,10 @@ import com.cuoiky.coffee3ae.model.BanAn;
 import com.cuoiky.coffee3ae.model.ChiTietDonDat;
 import com.cuoiky.coffee3ae.model.DonDat;
 import com.cuoiky.coffee3ae.model.Mon;
+import com.cuoiky.coffee3ae.model.NhanVien;
 import com.cuoiky.coffee3ae.model.ThanhToan;
 import com.cuoiky.coffee3ae.viewmodel.AdapterDisplayPayment;
+import com.cuoiky.coffee3ae.viewmodel.DonDatAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -76,26 +78,30 @@ public class PaymentActivity extends AppCompatActivity {
         gvDisplayPayment.setAdapter(adapterDisplayPayment);
 
 
+        tongtien = 0;
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot item:snapshot.getChildren())
                 {
+                    if(listChiTietDonDat != null){
+                        listChiTietDonDat.clear();
+                        adapterDisplayPayment.notifyDataSetChanged();
+                    }
                     ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
-                    if(data.getDonDat().getBan().getMaBan()==maban)
+                    if(data.getDonDat().getBan().getMaBan()==maban && data.getDonDat().getTinhTrang()!="true")
                     {
-                        tongtien = 0;
                         int sl = data.getSoLuong();
                         int giatien = Integer.parseInt(data.getMon().getGiaTien());
                         tongtien += sl*giatien;
                         listChiTietDonDat.add(data);
                     }
 
-
                 }
                 adapterDisplayPayment.notifyDataSetChanged();
-                Log.d("Tongtien", ""+ tongtien);
+                Log.d("Tong tien", ""+tongtien);
                 TXT_payment_TongTien.setText(String.valueOf(tongtien));
+
 
             }
 
@@ -107,6 +113,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         BTN_payment_ThanhToan.setOnClickListener(this::onClick);
         IMG_payment_backbtn.setOnClickListener(this::onClick);
+
 
     }
 
@@ -124,19 +131,28 @@ public class PaymentActivity extends AppCompatActivity {
                             ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
                             if(data.getDonDat().getBan().getMaBan()==maban)
                             {
-//                                mon1[0] = data;
-//                                Log.d("Mon", ""+ mon1[0].getTenMon());
-//                                giatien = Integer.parseInt(mon1[0].getGiaTien());
-//                                soluong = Integer.parseInt(TXTL_amountmenu_SoLuong.getEditText().getText().toString());
-//                                tongtien = String.valueOf(giatien*soluong);
-//                                id+=1;
-//                                String tinhtrang = "false";
-//                                DonDat donDat = new DonDat(id,tinhtrang,ngaydat,tongtien,  banAn1[0],nhanVien1[0]);
-//                                ChiTietDonDat chiTietDonDat = new ChiTietDonDat(soluong,mon1[0],donDat);
-//                                dataRef_detail.child(String.valueOf(id)).setValue(chiTietDonDat);
-//                                databaseReference.child(String.valueOf(id)).setValue(donDat);
-//                                Intent intent = new Intent(Amount_Menu_Activity.this, HomeActivity.class);
-//                                startActivity(intent);
+                                  int id = data.getDonDat().getMaDonDat();
+                                  Mon mon = data.getMon();
+                                  int soluong = data.getSoLuong();
+                                  BanAn banAn1 = data.getDonDat().getBan();
+                                  NhanVien nhanVien = data.getDonDat().getNhanVien();
+                                  String ngaydat = data.getDonDat().getNgayDat();
+                                  String tongtien = data.getDonDat().getTongTien();
+                                  String trangthai = "true";
+                                  DonDat donDat = new DonDat(id,trangthai,ngaydat,tongtien,banAn1,nhanVien);
+                                  ChiTietDonDat chiTietDonDat = new ChiTietDonDat(soluong,mon,donDat);
+                                  rootRef2.child(String.valueOf(id)).setValue(chiTietDonDat);
+                                  finish();
+//                                    int id = data.getMaDonDat();
+//                                    BanAn banAn1 = data.getBan();
+//                                    NhanVien nhanVien = data.getNhanVien();
+//                                    String tongtien = data.getTongTien();
+//                                    String trangthai = "true";
+//                                    DonDat donDat = new DonDat(id,trangthai,ngaydat,tongtien,banAn1,nhanVien);
+//                                    rootRef2.child(String.valueOf(id)).setValue(donDat);
+//                                    finish();
+
+
 
 
                             }
@@ -150,14 +166,6 @@ public class PaymentActivity extends AppCompatActivity {
                     }
 
                 });
-
-
-
-                Intent intent = new Intent(PaymentActivity.this,HomeActivity.class);
-                startActivity(intent);
-
-
-
 
                 break;
             case R.id.img_payment_backbtn:

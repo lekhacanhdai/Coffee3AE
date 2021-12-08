@@ -106,8 +106,8 @@ public class DetailStatisticActivity extends AppCompatActivity {
         img_detailstatistic_backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DetailStatisticActivity.this, DisplayStatisticFragment.class);
-                startActivity(intent);
+                finish();
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
             }
         });
 

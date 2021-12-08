@@ -42,7 +42,7 @@ public class DonDatAdapter extends RecyclerView.Adapter<DonDatAdapter.ViewHoder>
     }
 
     public class ViewHoder extends RecyclerView.ViewHolder{
-        public TextView tvMaBan, tvNgay, tvTenNhanVien, tvTinhTrang, tvMaDonDat;
+        public TextView tvMaBan, tvNgay, tvTenNhanVien, tvTinhTrang, tvMaDonDat ;
         public ViewHoder(@NonNull View itemView) {
             super(itemView);
             tvMaBan = itemView.findViewById(R.id.tv_ten_ban_home);

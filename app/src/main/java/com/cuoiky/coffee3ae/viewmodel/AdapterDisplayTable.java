@@ -32,6 +32,8 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
     int layout;
     List<BanAn> listBanAn;
     ViewHolder viewHolder;
+    private int manv;
+
 
     FragmentManager fragmentManager;
 
@@ -128,8 +130,11 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
                 AnButton();
                 break;
             case R.id.img_customtable_GoiMon:
+
                 Intent getIHome = ((HomeActivity)context).getIntent();
-                int manv = getIHome.getIntExtra("manv",0);
+                manv = getIHome.getIntExtra("manv",0);
+
+                Log.d("manv_adapter", ""+manv);
                 boolean tinhtrang =listBanAn.get(vitri1).isDuocChon();
 
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -139,9 +144,7 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
                 bDataCategory.putInt("maban",maban);
                 bDataCategory.putInt("manv",manv);
                 bDataCategory.putBoolean("tinhtrang",tinhtrang);
-                Log.d("adapter", ""+manv);
                 displayCategoryFragment.setArguments(bDataCategory);
-
                 transaction.replace(R.id.home_view,displayCategoryFragment).addToBackStack("hienthibanan");
                 transaction.commit();
                 break;

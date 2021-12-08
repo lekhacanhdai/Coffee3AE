@@ -15,6 +15,7 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import com.cuoiky.coffee3ae.R;
+import com.cuoiky.coffee3ae.model.ChiTietDonDat;
 import com.cuoiky.coffee3ae.model.DonDat;
 import com.cuoiky.coffee3ae.model.NhanVien;
 import com.cuoiky.coffee3ae.view.Activities.AddCategoryActivity;
@@ -37,7 +38,7 @@ public class DisplayStatisticFragment extends Fragment {
 
     GridView lvStatistic;
     DonDat donDat;
-    ArrayList<DonDat> listDonDat;
+    ArrayList<ChiTietDonDat> listDonDat;
     AdapterDisplayStatistic adapterDisplayStatistic;
     FragmentManager fragmentManager;
     private DatabaseReference databaseReference;
@@ -74,8 +75,8 @@ public class DisplayStatisticFragment extends Fragment {
 
         lvStatistic = (GridView) view.findViewById(R.id.lvStatistic);
 
-        databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("DonDat");
-        listDonDat = new ArrayList<DonDat>();
+        databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("ChiTietDonDat");
+        listDonDat = new ArrayList<ChiTietDonDat>();
 
         adapterDisplayStatistic = new AdapterDisplayStatistic(getActivity(),R.layout.order_item_row,listDonDat);
         lvStatistic.setAdapter(adapterDisplayStatistic);
@@ -85,7 +86,7 @@ public class DisplayStatisticFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot item:snapshot.getChildren())
                 {
-                    DonDat data = item.getValue(DonDat.class);
+                    ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
                     listDonDat.add(data);
                 }
                 adapterDisplayStatistic.notifyDataSetChanged();
@@ -99,13 +100,13 @@ public class DisplayStatisticFragment extends Fragment {
         lvStatistic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                madon = listDonDat.get(position).getMaDonDat();
-                manv = listDonDat.get(position).getNhanVien().getMaNV();
-                maban = listDonDat.get(position).getBan().getMaBan();
-                ngaydat = listDonDat.get(position).getNgayDat();
-                tongtien = listDonDat.get(position).getTongTien();
-                nguoidat = listDonDat.get(position).getNhanVien().getHoTenNV();
-                tenban = listDonDat.get(position).getBan().getTenBan();
+                madon = listDonDat.get(position).getDonDat().getMaDonDat();
+                manv = listDonDat.get(position).getDonDat().getNhanVien().getMaNV();
+                maban = listDonDat.get(position).getDonDat().getBan().getMaBan();
+                ngaydat = listDonDat.get(position).getDonDat().getNgayDat();
+                tongtien = listDonDat.get(position).getDonDat().getTongTien();
+                nguoidat = listDonDat.get(position).getDonDat().getNhanVien().getHoTenNV();
+                tenban = listDonDat.get(position).getDonDat().getBan().getTenBan();
 
                 Intent intent = new Intent(getActivity(), DetailStatisticActivity.class); // sua lai
                 intent.putExtra("madon",madon);

@@ -35,7 +35,9 @@ public class Amount_Menu_Activity extends AppCompatActivity {
 
     TextInputLayout TXTL_amountmenu_SoLuong;
     Button BTN_amountmenu_DongY;
-    public int maban, mamon,manv,id,giatien,soluong;
+    private int maban, mamon,manv,id,giatien,soluong;
+    private static int manv_codinh;
+
     String tongtien;
 
 
@@ -55,6 +57,7 @@ public class Amount_Menu_Activity extends AppCompatActivity {
         maban = intent.getIntExtra("maban",0);
         mamon = intent.getIntExtra("mamon",0);
         manv = intent.getIntExtra("manv",0);
+        manv_codinh = manv;
         DatabaseReference dataRef_detail = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("ChiTietDonDat");
         DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("DonDat");
         Query query = databaseReference.limitToLast(1);
@@ -87,6 +90,32 @@ public class Amount_Menu_Activity extends AppCompatActivity {
             }
         });
         Log.d("ID", ""+id);
+        Log.d("MA NV", ""+ manv_codinh);
+
+
+        //Log.d("BanAn_out", ""+ banAn1[0]);
+        DatabaseReference rootRef1 = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("NhanVien");
+        NhanVien[] nhanVien1 = {new NhanVien()};
+        rootRef1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot item:snapshot.getChildren())
+                {
+                    NhanVien data = item.getValue(NhanVien.class);
+                    if(data.getMaNV() == manv_codinh)
+                    {
+                        nhanVien1[0] = data;
+                    }
+
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         DatabaseReference rootRef = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("BanAn");
         BanAn[] banAn1 = {new BanAn()};
@@ -103,28 +132,6 @@ public class Amount_Menu_Activity extends AppCompatActivity {
                 }
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        //Log.d("BanAn_out", ""+ banAn1[0]);
-        DatabaseReference rootRef1 = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("NhanVien");
-        NhanVien[] nhanVien1 = {new NhanVien()};
-        rootRef1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot item:snapshot.getChildren())
-                {
-                    NhanVien data = item.getValue(NhanVien.class);
-                    if(data.getMaNV() == manv)
-                    {
-                        nhanVien1[0] = data;
-                    }
-
-                }
-
-            }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -181,13 +188,11 @@ public class Amount_Menu_Activity extends AppCompatActivity {
                                  tongtien = String.valueOf(giatien*soluong);
                                  id+=1;
                                  String tinhtrang = "false";
-                                 DonDat donDat = new DonDat(id,tinhtrang,ngaydat,tongtien,  banAn1[0],nhanVien1[0]);
+                                 DonDat donDat = new DonDat(id,tinhtrang,ngaydat,tongtien,banAn1[0],nhanVien1[0]);
                                  ChiTietDonDat chiTietDonDat = new ChiTietDonDat(soluong,mon1[0],donDat);
                                  dataRef_detail.child(String.valueOf(id)).setValue(chiTietDonDat);
                                  databaseReference.child(String.valueOf(id)).setValue(donDat);
-                                 Intent intent = new Intent(Amount_Menu_Activity.this, HomeActivity.class);
-                                 startActivity(intent);
-
+                                 finish();
 
                             }
                         }
