@@ -106,7 +106,7 @@ public class AddTableActivity extends AppCompatActivity {
                     setResult(RESULT_OK,intent);
                     finish();
                 }
-                if(maBan!=0){
+                if((TenBanAn != null || TenBanAn.equals(""))&& maBan!=0){
                     banAn = new BanAn(maBan,TenBanAn,duocChon);
                     databaseRef.child(String.valueOf(maBan)).setValue(banAn);
                     boolean ktra = true;

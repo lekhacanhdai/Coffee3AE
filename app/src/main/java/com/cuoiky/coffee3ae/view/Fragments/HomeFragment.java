@@ -158,7 +158,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 transOrderAll.commit();
                 break;
             case R.id.tv_btn_so_ban_home:
+                FragmentTransaction tranDisplayTable = getActivity().getSupportFragmentManager().beginTransaction();
+                tranDisplayTable.replace(R.id.home_view,new DisplayTableFragment());
+                tranDisplayTable.addToBackStack(null);
+                tranDisplayTable.commit();
+               // navigationView.setCheckedItem(R.id.nav_table);
                 break;
+
             case R.id.tv_btn_them_mon_home:
                 Intent intent = new Intent(getActivity(), AddCategoryActivity.class);
                 startActivity(intent);

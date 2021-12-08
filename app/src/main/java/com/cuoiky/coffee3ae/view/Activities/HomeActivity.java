@@ -89,7 +89,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 binding.homeLayout.closeDrawers();
                 break;
             case R.id.nav_table:
+                //hiển thị tương ứng trên navigation
+                FragmentTransaction tranDisplayTable = fragmentManager.beginTransaction();
+                DisplayTableFragment displayTableFragment = new DisplayTableFragment();
+                tranDisplayTable.replace(R.id.home_view,displayTableFragment);
+                tranDisplayTable.commit();
+                binding.navHome.setCheckedItem(item.getItemId());
+                binding.homeLayout.closeDrawers();
                 break;
+
             case R.id.nav_category:
                 FragmentTransaction trancLoai = fragmentManager.beginTransaction();
                 DisplayCategoryFragment categoryFragment = new DisplayCategoryFragment();

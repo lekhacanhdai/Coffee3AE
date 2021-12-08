@@ -130,6 +130,7 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
 
 
 
+
             case R.id.img_customtable_ThanhToan:
                 //chuyển dữ liệu qua trang thanh toán
                 Intent iThanhToan = new Intent(context, PaymentActivity.class);
