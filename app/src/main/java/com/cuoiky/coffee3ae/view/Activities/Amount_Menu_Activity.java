@@ -37,11 +37,10 @@ public class Amount_Menu_Activity extends AppCompatActivity {
     Button BTN_amountmenu_DongY;
     private int maban, mamon,manv,id,giatien,soluong;
     private static int manv_codinh;
-
-    String tongtien;
-
-
-
+    String tongtien ;
+    DonDat donDat;
+    ChiTietDonDat chiTietDonDat;
+    private final String tinhtrang = "false";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +58,12 @@ public class Amount_Menu_Activity extends AppCompatActivity {
         manv = intent.getIntExtra("manv",0);
         manv_codinh = manv;
         DatabaseReference dataRef_detail = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("ChiTietDonDat");
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("DonDat");
-        Query query = databaseReference.limitToLast(1);
+        Query query = dataRef_detail.limitToLast(1);
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                DonDat donDat = snapshot.getValue(DonDat.class);
-                id = donDat.getMaDonDat();
+                ChiTietDonDat chiTietDonDat = snapshot.getValue(ChiTietDonDat.class);
+                id = chiTietDonDat.getDonDat().getMaDonDat();
 
             }
 
@@ -138,28 +136,6 @@ public class Amount_Menu_Activity extends AppCompatActivity {
             }
         });
 
-        DatabaseReference rootRef_mon = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Mon");
-        Mon[] mon1 = {new Mon()};
-        rootRef1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot item:snapshot.getChildren())
-                {
-                    Mon data = item.getValue(Mon.class);
-                    if(data.getMaMon() == manv)
-                    {
-                        mon1[0] = data;
-                    }
-
-                }
-
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String ngaydat= dateFormat.format(calendar.getTime());
@@ -187,15 +163,13 @@ public class Amount_Menu_Activity extends AppCompatActivity {
                                  soluong = Integer.parseInt(TXTL_amountmenu_SoLuong.getEditText().getText().toString());
                                  tongtien = String.valueOf(giatien*soluong);
                                  id+=1;
-                                 String tinhtrang = "false";
-                                 DonDat donDat = new DonDat(id,tinhtrang,ngaydat,tongtien,banAn1[0],nhanVien1[0]);
-                                 ChiTietDonDat chiTietDonDat = new ChiTietDonDat(soluong,mon1[0],donDat);
+                                 donDat = new DonDat(id,tinhtrang,ngaydat,tongtien,banAn1[0],nhanVien1[0]);
+                                 chiTietDonDat = new ChiTietDonDat(soluong,mon1[0],donDat);
                                  dataRef_detail.child(String.valueOf(id)).setValue(chiTietDonDat);
-                                 databaseReference.child(String.valueOf(id)).setValue(donDat);
-                                 finish();
-
+                                 
                             }
                         }
+                        finish();
 
                     }
 

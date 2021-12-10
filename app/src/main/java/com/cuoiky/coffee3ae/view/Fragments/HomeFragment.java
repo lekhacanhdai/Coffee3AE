@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.FragmentHomeBinding;
+import com.cuoiky.coffee3ae.model.ChiTietDonDat;
 import com.cuoiky.coffee3ae.model.DonDat;
 import com.cuoiky.coffee3ae.model.LoaiMon;
 import com.cuoiky.coffee3ae.view.Activities.AddCategoryActivity;
@@ -38,7 +39,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private ArrayList<LoaiMon> loaiMonList;
     AdapterDisplayCategory loaiMonAdapter;
 
-    private ArrayList<DonDat> listDonDat;
+    private ArrayList<ChiTietDonDat> listDonDat;
     private DonDatAdapter donDatAdapter;
     private DatabaseReference databaseRef;
     private DatabaseReference donDatRef;
@@ -98,8 +99,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         RecyclerView rvDonDatHome = view.findViewById(R.id.rv_don_dat_honme);
 
-        donDatRef = mDatabase.getReference("DonDat");
-        listDonDat = new ArrayList<DonDat>();
+        donDatRef = mDatabase.getReference("ChiTietDonDat");
+        listDonDat = new ArrayList<ChiTietDonDat>();
         rvDonDatHome.setHasFixedSize(true);
         rvDonDatHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         donDatAdapter = new DonDatAdapter(listDonDat);
@@ -109,7 +110,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot item : snapshot.getChildren()){
-                    DonDat donDat = item.getValue(DonDat.class);
+                    ChiTietDonDat donDat = item.getValue(ChiTietDonDat.class);
                     listDonDat.add(donDat);
                 }
                 donDatAdapter.notifyDataSetChanged();

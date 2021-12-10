@@ -9,14 +9,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cuoiky.coffee3ae.R;
+import com.cuoiky.coffee3ae.model.ChiTietDonDat;
 import com.cuoiky.coffee3ae.model.DonDat;
 
 import java.util.ArrayList;
 
 public class DonDatAdapter extends RecyclerView.Adapter<DonDatAdapter.ViewHoder> {
-    private ArrayList<DonDat> listDonDat;
 
-    public DonDatAdapter(ArrayList<DonDat> listDonDat) {
+    private ArrayList<ChiTietDonDat> listDonDat;
+
+    public DonDatAdapter(ArrayList<ChiTietDonDat> listDonDat) {
         this.listDonDat = listDonDat;
     }
 
@@ -29,11 +31,17 @@ public class DonDatAdapter extends RecyclerView.Adapter<DonDatAdapter.ViewHoder>
 
     @Override
     public void onBindViewHolder(@NonNull ViewHoder holder, int position) {
-        holder.tvTinhTrang.setText(listDonDat.get(position).getTinhTrang());
-        holder.tvTenNhanVien.setText(listDonDat.get(position).getNhanVien().getHoTenNV());
-        holder.tvNgay.setText(listDonDat.get(position).getNgayDat());
-        holder.tvMaDonDat.setText("Mã đơn: " + listDonDat.get(position).getMaDonDat());
-        holder.tvMaBan.setText(listDonDat.get(position).getBan().getTenBan());
+
+        if(listDonDat.get(position).getDonDat().getTinhTrang().equals("true")){
+            holder.tvTinhTrang.setText("Đã Thanh Toán");
+        }
+        else{
+            holder.tvTinhTrang.setText("Chưa Thanh Toán");
+        }
+        holder.tvTenNhanVien.setText(listDonDat.get(position).getDonDat().getNhanVien().getHoTenNV());
+        holder.tvNgay.setText(listDonDat.get(position).getDonDat().getNgayDat());
+        holder.tvMaDonDat.setText("Mã đơn: " + listDonDat.get(position).getDonDat().getMaDonDat());
+        holder.tvMaBan.setText(listDonDat.get(position).getDonDat().getBan().getTenBan());
     }
 
     @Override

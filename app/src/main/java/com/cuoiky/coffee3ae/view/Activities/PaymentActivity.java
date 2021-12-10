@@ -38,11 +38,16 @@ public class PaymentActivity extends AppCompatActivity {
     TextView TXT_payment_TenBan, TXT_payment_NgayDat, TXT_payment_TongTien;
     Button BTN_payment_ThanhToan;
     GridView gvDisplayPayment;
+    DonDat donDat;
+    ChiTietDonDat chiTietDonDat;
+    NhanVien nhanVien;
+    BanAn banAn;
 
     ArrayList<ChiTietDonDat> listChiTietDonDat;
     AdapterDisplayPayment adapterDisplayPayment;
     int  maban, tongtien;
-    String ngaydat,nguoidat,tenban;
+    String ngaydat,nguoidat,tenban,tongtien_final;
+    String trangthai;
     private DatabaseReference databaseReference;
     FragmentManager fragmentManager;
 
@@ -77,30 +82,31 @@ public class PaymentActivity extends AppCompatActivity {
         adapterDisplayPayment = new AdapterDisplayPayment(this,R.layout.custom_layout_paymentmenu,listChiTietDonDat);
         gvDisplayPayment.setAdapter(adapterDisplayPayment);
 
-
         tongtien = 0;
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if(listChiTietDonDat != null){
+                    listChiTietDonDat.clear();
+                    adapterDisplayPayment.notifyDataSetChanged();
+                }
                 for(DataSnapshot item:snapshot.getChildren())
                 {
-                    if(listChiTietDonDat != null){
-                        listChiTietDonDat.clear();
-                        adapterDisplayPayment.notifyDataSetChanged();
-                    }
+
                     ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
                     if(data.getDonDat().getBan().getMaBan()==maban && data.getDonDat().getTinhTrang()!="true")
                     {
+                        listChiTietDonDat.add(data);
                         int sl = data.getSoLuong();
                         int giatien = Integer.parseInt(data.getMon().getGiaTien());
                         tongtien += sl*giatien;
-                        listChiTietDonDat.add(data);
-                    }
 
+                    }
+                    adapterDisplayPayment.notifyDataSetChanged();
                 }
-                adapterDisplayPayment.notifyDataSetChanged();
-                Log.d("Tong tien", ""+tongtien);
                 TXT_payment_TongTien.setText(String.valueOf(tongtien));
+                Log.d("Tong tien", ""+tongtien);
 
 
             }
@@ -114,49 +120,37 @@ public class PaymentActivity extends AppCompatActivity {
         BTN_payment_ThanhToan.setOnClickListener(this::onClick);
         IMG_payment_backbtn.setOnClickListener(this::onClick);
 
-
     }
 
     public void onClick(View v) {
         int id = v.getId();
         switch (id){
             case R.id.btn_payment_ThanhToan:
-
-                DatabaseReference rootRef2 = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("ChiTietDonDat");
-                rootRef2.addValueEventListener(new ValueEventListener() {
+                databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot item:snapshot.getChildren())
                         {
                             ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
-                            if(data.getDonDat().getBan().getMaBan()==maban)
+                            if(data.getDonDat().getBan().getMaBan()==maban )
                             {
                                   int id = data.getDonDat().getMaDonDat();
                                   Mon mon = data.getMon();
                                   int soluong = data.getSoLuong();
-                                  BanAn banAn1 = data.getDonDat().getBan();
-                                  NhanVien nhanVien = data.getDonDat().getNhanVien();
-                                  String ngaydat = data.getDonDat().getNgayDat();
-                                  String tongtien = data.getDonDat().getTongTien();
-                                  String trangthai = "true";
-                                  DonDat donDat = new DonDat(id,trangthai,ngaydat,tongtien,banAn1,nhanVien);
-                                  ChiTietDonDat chiTietDonDat = new ChiTietDonDat(soluong,mon,donDat);
-                                  rootRef2.child(String.valueOf(id)).setValue(chiTietDonDat);
-                                  finish();
-//                                    int id = data.getMaDonDat();
-//                                    BanAn banAn1 = data.getBan();
-//                                    NhanVien nhanVien = data.getNhanVien();
-//                                    String tongtien = data.getTongTien();
-//                                    String trangthai = "true";
-//                                    DonDat donDat = new DonDat(id,trangthai,ngaydat,tongtien,banAn1,nhanVien);
-//                                    rootRef2.child(String.valueOf(id)).setValue(donDat);
-//                                    finish();
-
-
-
+                                  banAn = data.getDonDat().getBan();
+                                  nhanVien = data.getDonDat().getNhanVien();
+                                  ngaydat = data.getDonDat().getNgayDat();
+                                  trangthai = "true";
+                                  tongtien_final = data.getDonDat().getTongTien();
+                                  donDat = new DonDat(id,trangthai,ngaydat,tongtien_final,banAn,nhanVien);
+                                  chiTietDonDat = new ChiTietDonDat(soluong,mon,donDat);
+                                  databaseReference.child(String.valueOf(id)).setValue(chiTietDonDat);
+                                  Log.d("vao ", ""+data.getDonDat().getTinhTrang());
 
                             }
                         }
+
+                        finish();
 
                     }
 
