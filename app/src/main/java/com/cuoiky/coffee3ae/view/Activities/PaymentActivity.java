@@ -129,27 +129,24 @@ public class PaymentActivity extends AppCompatActivity {
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot item:snapshot.getChildren())
-                        {
+                        for(DataSnapshot item:snapshot.getChildren()) {
                             ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
-                            if(data.getDonDat().getBan().getMaBan()==maban )
-                            {
-                                  int id = data.getDonDat().getMaDonDat();
-                                  Mon mon = data.getMon();
-                                  int soluong = data.getSoLuong();
-                                  banAn = data.getDonDat().getBan();
-                                  nhanVien = data.getDonDat().getNhanVien();
-                                  ngaydat = data.getDonDat().getNgayDat();
-                                  trangthai = "true";
-                                  tongtien_final = data.getDonDat().getTongTien();
-                                  donDat = new DonDat(id,trangthai,ngaydat,tongtien_final,banAn,nhanVien);
-                                  chiTietDonDat = new ChiTietDonDat(soluong,mon,donDat);
-                                  databaseReference.child(String.valueOf(id)).setValue(chiTietDonDat);
-                                  Log.d("vao ", ""+data.getDonDat().getTinhTrang());
+                            if (data.getDonDat().getBan().getMaBan() == maban) {
+                                int id = data.getDonDat().getMaDonDat();
+                                Mon mon = data.getMon();
+                                int soluong = data.getSoLuong();
+                                banAn = data.getDonDat().getBan();
+                                nhanVien = data.getDonDat().getNhanVien();
+                                ngaydat = data.getDonDat().getNgayDat();
+                                trangthai = "true";
+                                tongtien_final = data.getDonDat().getTongTien();
+                                donDat = new DonDat(id, trangthai, ngaydat, tongtien_final, banAn, nhanVien);
+                                chiTietDonDat = new ChiTietDonDat(soluong, mon, donDat);
+                                databaseReference.child(String.valueOf(id)).setValue(chiTietDonDat);
+                                Log.d("vao ", "" + data.getDonDat().getTinhTrang());
 
                             }
                         }
-
                         finish();
 
                     }
