@@ -45,6 +45,7 @@ public class DisplayMenuFragment extends Fragment {
 
     int maloai, maban,manv;
     String tenloai,tinhtrang,url,tenmon,giatien;
+    boolean tinhtrang_ban;
     GridView gvDisplayMenu;
 
     private DatabaseReference databaseReference;
@@ -107,6 +108,7 @@ public class DisplayMenuFragment extends Fragment {
             url = bundle.getString("url");
             maban = bundle.getInt("maban");
             manv = bundle.getInt("manv");
+            tinhtrang_ban = bundle.getBoolean("tinhtrang");
 
             gvDisplayMenu = view.findViewById(R.id.gvDisplayMenu);
             databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Mon");
@@ -123,6 +125,7 @@ public class DisplayMenuFragment extends Fragment {
                             iAmount.putExtra("maban",maban);
                             iAmount.putExtra("mamon",listMon.get(position).getMaMon());
                             iAmount.putExtra("manv",manv);
+                            iAmount.putExtra("tinhtrang",tinhtrang_ban);
                             startActivity(iAmount);
                         }else {
                             Toast.makeText(getActivity(),"Món đã hết, không thể thêm", Toast.LENGTH_SHORT).show();

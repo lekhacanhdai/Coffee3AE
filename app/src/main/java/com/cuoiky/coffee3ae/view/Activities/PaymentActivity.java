@@ -48,7 +48,7 @@ public class PaymentActivity extends AppCompatActivity {
     int  maban, tongtien;
     String ngaydat,nguoidat,tenban,tongtien_final;
     String trangthai;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,update_ban;
     FragmentManager fragmentManager;
 
     @Override
@@ -77,6 +77,8 @@ public class PaymentActivity extends AppCompatActivity {
         }
 
         databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("ChiTietDonDat");
+        update_ban = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("BanAn");
+
         listChiTietDonDat = new ArrayList<ChiTietDonDat>();
 
         adapterDisplayPayment = new AdapterDisplayPayment(this,R.layout.custom_layout_paymentmenu,listChiTietDonDat);
@@ -91,11 +93,12 @@ public class PaymentActivity extends AppCompatActivity {
                     listChiTietDonDat.clear();
                     adapterDisplayPayment.notifyDataSetChanged();
                 }
+
                 for(DataSnapshot item:snapshot.getChildren())
                 {
 
                     ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
-                    if(data.getDonDat().getBan().getMaBan()==maban && data.getDonDat().getTinhTrang()!="true")
+                    if(data.getDonDat().getBan().getMaBan()==maban && data.getDonDat().getTinhTrang().equals("false"))
                     {
                         listChiTietDonDat.add(data);
                         int sl = data.getSoLuong();
@@ -106,7 +109,7 @@ public class PaymentActivity extends AppCompatActivity {
                     adapterDisplayPayment.notifyDataSetChanged();
                 }
                 TXT_payment_TongTien.setText(String.valueOf(tongtien));
-                Log.d("Tong tien", ""+tongtien);
+                Log.d("Tong tien_payment", ""+tongtien);
 
 
             }
@@ -119,6 +122,7 @@ public class PaymentActivity extends AppCompatActivity {
 
         BTN_payment_ThanhToan.setOnClickListener(this::onClick);
         IMG_payment_backbtn.setOnClickListener(this::onClick);
+
 
     }
 
@@ -134,24 +138,21 @@ public class PaymentActivity extends AppCompatActivity {
                             ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
                             if(data.getDonDat().getBan().getMaBan()==maban )
                             {
-                                  int id = data.getDonDat().getMaDonDat();
-                                  Mon mon = data.getMon();
-                                  int soluong = data.getSoLuong();
-                                  banAn = data.getDonDat().getBan();
-                                  nhanVien = data.getDonDat().getNhanVien();
-                                  ngaydat = data.getDonDat().getNgayDat();
-                                  trangthai = "true";
-                                  tongtien_final = data.getDonDat().getTongTien();
-                                  donDat = new DonDat(id,trangthai,ngaydat,tongtien_final,banAn,nhanVien);
-                                  chiTietDonDat = new ChiTietDonDat(soluong,mon,donDat);
-                                  databaseReference.child(String.valueOf(id)).setValue(chiTietDonDat);
-                                  Log.d("vao ", ""+data.getDonDat().getTinhTrang());
+                                int maDonDat = data.getDonDat().getMaDonDat();
+                                Mon mon = data.getMon();
+                                int soluong = data.getSoLuong();
+                                banAn = new BanAn(data.getDonDat().getBan().getMaBan(),data.getDonDat().getBan().getTenBan(),false);
+                                nhanVien = data.getDonDat().getNhanVien();
+                                ngaydat = data.getDonDat().getNgayDat();
+                                trangthai = "true";
+                                tongtien_final = data.getDonDat().getTongTien();
+                                donDat = new DonDat(maDonDat,trangthai,ngaydat,tongtien_final,banAn,nhanVien);
+                                chiTietDonDat = new ChiTietDonDat(soluong,mon,donDat);
+                                databaseReference.child(String.valueOf(maDonDat)).setValue(chiTietDonDat);
+                                update_ban.child(String.valueOf(maban)).setValue(banAn);
 
                             }
                         }
-
-                        finish();
-
                     }
 
                     @Override
@@ -160,7 +161,8 @@ public class PaymentActivity extends AppCompatActivity {
                     }
 
                 });
-
+                Log.d("trangthai_pay", ""+trangthai);
+                finish();
                 break;
             case R.id.img_payment_backbtn:
                 finish();

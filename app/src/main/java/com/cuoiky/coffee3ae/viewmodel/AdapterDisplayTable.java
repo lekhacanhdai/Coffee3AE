@@ -90,7 +90,7 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
         boolean kttinhtrang = listBanAn.get(position).isDuocChon();
         //đổi hình theo tình trạng
         if(kttinhtrang == true ){
-            viewHolder.imgBanAn.setImageResource(R.drawable.ban_dai_hello);
+            viewHolder.imgBanAn.setImageResource(R.drawable.ban_done_2);
         }else {
             viewHolder.imgBanAn.setImageResource(R.drawable.ban_dai_hello);
         }
@@ -123,7 +123,7 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
         switch (id) {
             case R.id.img_customtable_BanAn:
                 int vitri = (int)v.getTag();
-                listBanAn.get(vitri).setDuocChon(true);
+
                 HienThiButton();
                 break;
             case R.id.img_customtable_AnNut:
@@ -135,7 +135,7 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
                 manv = getIHome.getIntExtra("manv",0);
 
                 Log.d("manv_adapter", ""+manv);
-                boolean tinhtrang =listBanAn.get(vitri1).isDuocChon();
+                boolean tinhtrang = true;
 
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 DisplayCategoryFragment displayCategoryFragment = new DisplayCategoryFragment();

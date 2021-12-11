@@ -45,6 +45,7 @@ public class DisplayCategoryFragment extends Fragment {
     private GridView gridView;
     FragmentManager fragmentManager;
     int maban,manv;
+    boolean tinhtrang;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,7 @@ public class DisplayCategoryFragment extends Fragment {
         if(bDataCategory != null){
             maban = bDataCategory.getInt("maban");
             manv = bDataCategory.getInt("manv");
+            tinhtrang = bDataCategory.getBoolean("tinhtrang");
         }
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -111,6 +113,7 @@ public class DisplayCategoryFragment extends Fragment {
                 bundle.putString("tenloai",tenLoai);
                 bundle.putInt("maban",maban);
                 bundle.putInt("manv",manv);
+                bundle.putBoolean("tinhtrang",tinhtrang);
                 Log.d("Ma_nv_catalogy", ""+manv);
                 displayMenuFragment.setArguments(bundle);
 
