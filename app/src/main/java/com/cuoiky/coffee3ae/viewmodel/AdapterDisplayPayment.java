@@ -43,7 +43,7 @@ public class AdapterDisplayPayment  extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return listChitietdondat.get(position).getDonDat().getMaDonDat();
     }
 
     @Override

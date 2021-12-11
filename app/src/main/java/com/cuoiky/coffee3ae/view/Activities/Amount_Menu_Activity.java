@@ -37,6 +37,7 @@ public class Amount_Menu_Activity extends AppCompatActivity {
     Button BTN_amountmenu_DongY;
     private int maban, mamon,manv,id,giatien,soluong;
     private static int manv_codinh;
+    boolean tinhtrang_ban;
     String tongtien ;
     DonDat donDat;
     ChiTietDonDat chiTietDonDat;
@@ -56,6 +57,7 @@ public class Amount_Menu_Activity extends AppCompatActivity {
         maban = intent.getIntExtra("maban",0);
         mamon = intent.getIntExtra("mamon",0);
         manv = intent.getIntExtra("manv",0);
+        tinhtrang_ban = intent.getBooleanExtra("tinhtrang",false);
         manv_codinh = manv;
         DatabaseReference dataRef_detail = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("ChiTietDonDat");
         Query query = dataRef_detail.limitToLast(1);
@@ -139,15 +141,13 @@ public class Amount_Menu_Activity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String ngaydat= dateFormat.format(calendar.getTime());
-
+        DatabaseReference rootRef2 = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Mon");
         BTN_amountmenu_DongY.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!validateAmount()){
                     return;
                 }
-
-                DatabaseReference rootRef2 = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("Mon");
                 Mon[] mon1 = {new Mon()};
                 rootRef2.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -163,12 +163,15 @@ public class Amount_Menu_Activity extends AppCompatActivity {
                                  soluong = Integer.parseInt(TXTL_amountmenu_SoLuong.getEditText().getText().toString());
                                  tongtien = String.valueOf(giatien*soluong);
                                  id+=1;
-                                 donDat = new DonDat(id,tinhtrang,ngaydat,tongtien,banAn1[0],nhanVien1[0]);
+                                 BanAn banAn = new BanAn(maban,banAn1[0].getTenBan(),true);
+                                 donDat = new DonDat(id,tinhtrang,ngaydat,tongtien,banAn,nhanVien1[0]);
                                  chiTietDonDat = new ChiTietDonDat(soluong,mon1[0],donDat);
                                  dataRef_detail.child(String.valueOf(id)).setValue(chiTietDonDat);
-                                 
+                                 rootRef.child(String.valueOf(maban)).setValue(banAn);
+
                             }
                         }
+                        Log.d("trangthai_datmon", ""+tinhtrang);
                         finish();
 
                     }
@@ -179,7 +182,7 @@ public class Amount_Menu_Activity extends AppCompatActivity {
                     }
 
                 });
-                Log.d("tongtien", ""+ tongtien);
+
             }
         });
 
