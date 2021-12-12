@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.AddCategoryLayoutBinding;
@@ -28,12 +30,15 @@ public class AddTableActivity extends AppCompatActivity {
     TextInputLayout TXTL_addtable_tenban;
     Button BTN_addtable_TaoBan;
     BanAn banAn;
+    TextView  TV_TinhtrangBan;
+    RadioButton rdoDaChon,rdoChuaChon;
     private DatabaseReference databaseRef;
     private FirebaseAuth firebaseAuth;
     private int  id ;
-    private boolean duocChon = false;
+    private boolean duocChon ;
     private String tenBan;
     private int maBan;
+    boolean tinhtrang_ban;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +54,26 @@ public class AddTableActivity extends AppCompatActivity {
 
         TXTL_addtable_tenban = (TextInputLayout)findViewById(R.id.txtl_addtable_tenban);
         BTN_addtable_TaoBan = (Button)findViewById(R.id.btn_addtable_TaoBan);
+        TV_TinhtrangBan = (TextView)findViewById(R.id.txt_addmenu_TinhTrang);
+        rdoDaChon = (RadioButton)findViewById(R.id.rd_addmenu_HetBan);
+        rdoChuaChon =(RadioButton)findViewById(R.id.rd_addmenu_ConBan);
+
+
 
         maBan = getIntent().getIntExtra("maban",0);
         tenBan = getIntent().getStringExtra("tenban");
+        tinhtrang_ban = getIntent().getBooleanExtra("tinhtrang",false);
         if(maBan!=0){
             TXTL_addtable_tenban.getEditText().setText(tenBan);
             BTN_addtable_TaoBan.setText("Sua Ban");
+            if(tinhtrang_ban == true){
+                 rdoDaChon.setChecked(true);
+                 duocChon = true;
+            }
+            else {
+                rdoChuaChon.setChecked(true);
+                duocChon = false;
+            }
         }
 
         databaseRef = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("BanAn");
@@ -96,6 +115,13 @@ public class AddTableActivity extends AppCompatActivity {
                 String TenBanAn = TXTL_addtable_tenban.getEditText().getText().toString();
                 if((TenBanAn != null || TenBanAn.equals(""))&&(id>=0 && maBan==0)){
                     id += 1;
+                    if(banAn.isDuocChon()==true)
+                    {
+                        duocChon = true;
+                    }
+                    else{
+                        duocChon = false;
+                    }
                     banAn = new BanAn(id,TenBanAn,duocChon);
                     databaseRef.child(String.valueOf(id)).setValue(banAn);
 
@@ -107,6 +133,13 @@ public class AddTableActivity extends AppCompatActivity {
                     finish();
                 }
                 if((TenBanAn != null || TenBanAn.equals(""))&& maBan!=0){
+                    if(rdoChuaChon.isChecked())
+                    {
+                        duocChon = false;
+                    }
+                    else{
+                        duocChon = true;
+                    }
                     banAn = new BanAn(maBan,TenBanAn,duocChon);
                     databaseRef.child(String.valueOf(maBan)).setValue(banAn);
                     boolean ktra = true;

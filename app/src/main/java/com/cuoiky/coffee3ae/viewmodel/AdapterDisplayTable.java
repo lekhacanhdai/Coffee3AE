@@ -158,6 +158,8 @@ public class AdapterDisplayTable extends BaseAdapter implements View.OnClickList
                 iThanhToan.putExtra("ngaydat",ngaydat);
                 context.startActivity(iThanhToan);
                 break;
+            default:
+                break;
         }
 
 

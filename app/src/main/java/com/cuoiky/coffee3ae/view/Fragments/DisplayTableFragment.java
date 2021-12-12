@@ -126,12 +126,14 @@ public class DisplayTableFragment extends Fragment {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         int vitri = menuInfo.position;
         int maban = listBanAn.get(vitri).getMaBan();
+        boolean tinhtrang_ban = listBanAn.get(vitri).isDuocChon();
         String tenBan = listBanAn.get(vitri).getTenBan();
         switch(id){
             case R.id.itEdit:
                 Intent intent = new Intent(getActivity(), AddTableActivity.class);
                 intent.putExtra("maban",maban);
                 intent.putExtra("tenban",tenBan);
+                intent.putExtra("tinhtrang",tinhtrang_ban);
                 resultLauncherEdit.launch(intent);
                 break;
 

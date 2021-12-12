@@ -42,13 +42,14 @@ public class PaymentActivity extends AppCompatActivity {
     ChiTietDonDat chiTietDonDat;
     NhanVien nhanVien;
     BanAn banAn;
+    int count = 0;
 
     ArrayList<ChiTietDonDat> listChiTietDonDat;
     AdapterDisplayPayment adapterDisplayPayment;
     int  maban, tongtien;
     String ngaydat,nguoidat,tenban,tongtien_final;
     String trangthai;
-    private DatabaseReference databaseReference,update_ban;
+    private DatabaseReference databaseReference,update_ban,updata_dondate;
     FragmentManager fragmentManager;
 
     @Override
@@ -64,26 +65,79 @@ public class PaymentActivity extends AppCompatActivity {
         TXT_payment_TongTien = (TextView)findViewById(R.id.txt_payment_TongTien);
         BTN_payment_ThanhToan = (Button)findViewById(R.id.btn_payment_ThanhToan);
 
-
+        fragmentManager = getSupportFragmentManager();
         Intent intent = getIntent();
         maban = intent.getIntExtra("maban",0);
         ngaydat = intent.getStringExtra("ngaydat");
         tenban = intent.getStringExtra("tenban");
-
+        databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("ChiTietDonDat");
+        update_ban = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("BanAn");
+        listChiTietDonDat = new ArrayList<ChiTietDonDat>();
         if(maban!=0){
             TXT_payment_TenBan.setText(tenban);
             TXT_payment_NgayDat.setText(ngaydat);
-
+            HienThiDsThanhtoan();
         }
 
-        databaseReference = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("ChiTietDonDat");
-        update_ban = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("BanAn");
 
-        listChiTietDonDat = new ArrayList<ChiTietDonDat>();
+        IMG_payment_backbtn.setOnClickListener(this::onClick);
+        BTN_payment_ThanhToan.setOnClickListener(this::onClick);
 
+    }
+
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id){
+            case R.id.btn_payment_ThanhToan:
+                updata_dondate = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("ChiTietDonDat");
+                updata_dondate.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot item:snapshot.getChildren())
+                        {
+                            ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
+                            if(data.getDonDat().getBan().getMaBan()==maban )
+                            {
+                                int maDonDat = data.getDonDat().getMaDonDat();
+                                Mon mon = data.getMon();
+                                int soluong = data.getSoLuong();
+                                banAn = new BanAn(data.getDonDat().getBan().getMaBan(),data.getDonDat().getBan().getTenBan(),false);
+                                nhanVien = data.getDonDat().getNhanVien();
+                                ngaydat = data.getDonDat().getNgayDat();
+                                trangthai = "true";
+                                tongtien_final = data.getDonDat().getTongTien();
+                                donDat = new DonDat(maDonDat,trangthai,ngaydat,tongtien_final,banAn,nhanVien);
+                                chiTietDonDat = new ChiTietDonDat(soluong,mon,donDat);
+                                databaseReference.child(String.valueOf(maDonDat)).setValue(chiTietDonDat);
+                                update_ban.child(String.valueOf(maban)).setValue(banAn);
+                                databaseReference.removeEventListener(this);
+
+                            }
+                        }
+                        Log.d("trangthai_pay_truoc", ""+trangthai);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+
+                });
+                finish();
+                break;
+            case R.id.img_payment_backbtn:
+                finish();
+                break;
+            default:
+                finish();
+                break;
+        }
+    }
+
+    private void HienThiDsThanhtoan(){
         adapterDisplayPayment = new AdapterDisplayPayment(this,R.layout.custom_layout_paymentmenu,listChiTietDonDat);
         gvDisplayPayment.setAdapter(adapterDisplayPayment);
-
         tongtien = 0;
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -108,65 +162,13 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                     adapterDisplayPayment.notifyDataSetChanged();
                 }
-                TXT_payment_TongTien.setText(String.valueOf(tongtien));
+                TXT_payment_TongTien.setText(String.valueOf(tongtien)+" VNĐ");
                 Log.d("Tong tien_payment", ""+tongtien);
-
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
-        BTN_payment_ThanhToan.setOnClickListener(this::onClick);
-        IMG_payment_backbtn.setOnClickListener(this::onClick);
-
-
-    }
-
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id){
-            case R.id.btn_payment_ThanhToan:
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot item:snapshot.getChildren())
-                        {
-                            ChiTietDonDat data = item.getValue(ChiTietDonDat.class);
-                            if(data.getDonDat().getBan().getMaBan()==maban )
-                            {
-                                int maDonDat = data.getDonDat().getMaDonDat();
-                                Mon mon = data.getMon();
-                                int soluong = data.getSoLuong();
-                                banAn = new BanAn(data.getDonDat().getBan().getMaBan(),data.getDonDat().getBan().getTenBan(),false);
-                                nhanVien = data.getDonDat().getNhanVien();
-                                ngaydat = data.getDonDat().getNgayDat();
-                                trangthai = "true";
-                                tongtien_final = data.getDonDat().getTongTien();
-                                donDat = new DonDat(maDonDat,trangthai,ngaydat,tongtien_final,banAn,nhanVien);
-                                chiTietDonDat = new ChiTietDonDat(soluong,mon,donDat);
-                                databaseReference.child(String.valueOf(maDonDat)).setValue(chiTietDonDat);
-                                update_ban.child(String.valueOf(maban)).setValue(banAn);
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-
-                });
-                Log.d("trangthai_pay", ""+trangthai);
-                finish();
-                break;
-            case R.id.img_payment_backbtn:
-                finish();
-                break;
-        }
     }
 }

@@ -168,6 +168,7 @@ public class Amount_Menu_Activity extends AppCompatActivity {
                                  chiTietDonDat = new ChiTietDonDat(soluong,mon1[0],donDat);
                                  dataRef_detail.child(String.valueOf(id)).setValue(chiTietDonDat);
                                  rootRef.child(String.valueOf(maban)).setValue(banAn);
+                                 dataRef_detail.removeEventListener(this);
 
                             }
                         }
