@@ -1,6 +1,8 @@
 package com.cuoiky.coffee3ae.view.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.FragmentHomeBinding;
@@ -38,6 +41,8 @@ import java.util.List;
 public class HomeFragment extends Fragment implements View.OnClickListener{
     private ArrayList<LoaiMon> loaiMonList;
     AdapterDisplayCategory loaiMonAdapter;
+    SharedPreferences sharedPreferences;
+    int maquyen = 0;
 
     private ArrayList<ChiTietDonDat> listDonDat;
     private DonDatAdapter donDatAdapter;
@@ -65,6 +70,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ((HomeActivity)getActivity()).getSupportActionBar().setTitle("Trang chủ");
         setHasOptionsMenu(true);
+
+        sharedPreferences = getActivity().getSharedPreferences("luuquyen", Context.MODE_PRIVATE);
+        maquyen = sharedPreferences.getInt("maquyen",0);
+
         mDatabase = FirebaseDatabase.getInstance("https://coffee3ae-default-rtdb.asia-southeast1.firebasedatabase.app/");
         databaseRef = mDatabase.getReference("LoaiMon");
         loaiMonList = new ArrayList<LoaiMon>();
@@ -171,10 +180,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
                 startActivity(intent);
                 break;
             case R.id.tv_btn_nhan_vien_home:
-                FragmentTransaction trancNhanVien = getActivity().getSupportFragmentManager().beginTransaction();
-                trancNhanVien.replace(R.id.home_view, new DisplayStaffFrament());
-                trancNhanVien.addToBackStack(null);
-                trancNhanVien.commit();
+                if(maquyen==1){
+                    FragmentTransaction trancNhanVien = getActivity().getSupportFragmentManager().beginTransaction();
+                    trancNhanVien.replace(R.id.home_view, new DisplayStaffFrament());
+                    trancNhanVien.addToBackStack(null);
+                    trancNhanVien.commit();
+                }else{
+                    Toast.makeText(getActivity().getApplicationContext(),"Bạn không có quyền truy cập",Toast.LENGTH_SHORT).show();
+                }
+
                 break;
             default:
                 break;

@@ -4,8 +4,6 @@ package com.cuoiky.coffee3ae.view.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -16,19 +14,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.cuoiky.coffee3ae.R;
 import com.cuoiky.coffee3ae.databinding.ActivityHomeBinding;
-import com.cuoiky.coffee3ae.databinding.ActivityMainBinding;
-import com.cuoiky.coffee3ae.view.Fragments.BlankFragment;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayCategoryFragment;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayStaffFrament;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayStatisticFragment;
 import com.cuoiky.coffee3ae.view.Fragments.DisplayTableFragment;
 import com.cuoiky.coffee3ae.view.Fragments.HomeFragment;
-import com.cuoiky.coffee3ae.viewmodel.AdapterDisplayTable;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -66,8 +60,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Log.d("manv_homeActivity", ""+manv);
 
         binding.homeLayout.addDrawerListener(drawerToggle);
-
         drawerToggle.syncState();
+
+        sharedPreferences = getSharedPreferences("luuquyen", Context.MODE_PRIVATE);
+        maquyen = sharedPreferences.getInt("maquyen",0);
 
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction tranHomeF = fragmentManager.beginTransaction();
@@ -118,12 +114,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 binding.homeLayout.closeDrawers();
                 break;
             case R.id.nav_staff:
-                FragmentTransaction trancNhanVien = fragmentManager.beginTransaction();
-                DisplayStaffFrament staffFrament = new DisplayStaffFrament();
-                trancNhanVien.replace(R.id.home_view, staffFrament).addToBackStack(null);
-                trancNhanVien.commit();
-                binding.navHome.setCheckedItem(itemId);
-                binding.homeLayout.closeDrawers();
+                if(maquyen == 1) {
+                    FragmentTransaction trancNhanVien = fragmentManager.beginTransaction();
+                    DisplayStaffFrament staffFrament = new DisplayStaffFrament();
+                    trancNhanVien.replace(R.id.home_view, staffFrament).addToBackStack(null);
+                    trancNhanVien.commit();
+                    binding.navHome.setCheckedItem(itemId);
+                    binding.homeLayout.closeDrawers();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Bạn không có quyền truy cập",Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.nav_logout:
                 Intent intent = new Intent(HomeActivity.this, WelcomeActivity.class);
