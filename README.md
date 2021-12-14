@@ -8,16 +8,8 @@
   <img src="https://github.com/lekhacanhdai/Coffee3AE/blob/master/app/src/main/res/drawable/logo.png?raw=true" width="350" alt="accessibility text">
 </p>
 
-<h2 dir="auto"><a id="user-content--demo" class="anchor" aria-hidden="true" href="#-demo"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z"></path></svg></a><g-emoji class="g-emoji" alias="sparkles" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png"><img class="emoji" alt="sparkles" height="20" width="20" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png"></g-emoji> Demo</h2>
-
-
-<p align="center" dir="auto">
-  <video controls>
-        <source  width="700" align="center" src="https://youtu.be/I-Y3u0SWu04?t=20"  alt="demo" style="max-width: 100%;">
-    </video>
-</p>
-
-<div class="ytp-cued-thumbnail-overlay-image" style="background-image: url(&quot;https://i.ytimg.com/vi_webp/I-Y3u0SWu04/maxresdefault.webp&quot;);"></div>
+# Demo
+    https://youtu.be/I-Y3u0SWu04
 
 # Introduce my project
  An information technology application makes management easier. Eliminate complex manual tasks that are prone to errors.
