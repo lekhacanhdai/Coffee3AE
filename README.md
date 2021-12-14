@@ -27,9 +27,9 @@
     + Gửi mail đến địa chỉ : khacdai0801@gmail.com -> Để được add vào firebase  
 
 # Code Contributors
-    + Phạm Văn Thọ : https://github.com/phamtho123
-    + Lê Khắc Anh Đài : https://github.com/lekhacanhdai
-    + Lương Ngọc Đạt : https://github.com/vndat00
+- Phạm Văn Thọ : https://github.com/phamtho123
+- Lê Khắc Anh Đài : https://github.com/lekhacanhdai
+- Lương Ngọc Đạt : https://github.com/vndat00
 
 # Link Source Code 
     https://github.com/lekhacanhdai/Coffee3AE.git
