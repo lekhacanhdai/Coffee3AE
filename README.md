@@ -8,8 +8,8 @@
 # Prerequisites 
 
 - Trước khi run project bạn phải đảm bảo các yêu cầu sau :
-    + Cài đặt android studio 
-    + Cài đặt SDK 
+    + Cài đặt android studio version 2020 (có thể với version mới hơn)
+    + Cài đặt SDK version >= 30
     + Sử dụng một thiết bị Android hoặc Android Virtual Device 
     + Gửi yêu cầu đến admin để được add vào firebase
 
