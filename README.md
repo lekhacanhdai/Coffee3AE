@@ -1,6 +1,6 @@
 
 # Project Name 
- Ứng dụng quản lí quán Coffee 
+ <h1>Ứng dụng quản lí quán Coffee </h1>
 
 <p align="center">
   <img src="https://github.com/lekhacanhdai/Coffee3AE/blob/master/app/src/main/res/drawable/logo.png?raw=true" width="350" alt="accessibility text">
