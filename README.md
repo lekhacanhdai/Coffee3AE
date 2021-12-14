@@ -8,8 +8,7 @@
   <img src="https://github.com/lekhacanhdai/Coffee3AE/blob/master/app/src/main/res/drawable/logo.png?raw=true" width="350" alt="accessibility text">
 </p>
 
-# Demo
-    https://youtu.be/I-Y3u0SWu04
+
 
 # Introduce my project
  An information technology application makes management easier. Eliminate complex manual tasks that are prone to errors.
@@ -43,3 +42,5 @@
 # Link Source Code 
     https://github.com/lekhacanhdai/Coffee3AE.git
 
+# Demo
+    https://youtu.be/I-Y3u0SWu04
