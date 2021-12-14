@@ -1,7 +1,10 @@
-# Welcome to readme-md-generator wave
 
 # Project Name 
  Ứng dụng quản lí quán Coffee 
+
+<p align="center">
+  <img src="https://github.com/lekhacanhdai/Coffee3AE/blob/master/app/src/main/res/drawable/logo.png?raw=true" width="350" alt="accessibility text">
+</p>
 
 # Introduce my project
  Một ứng dụng công nghệ thông tin giúp công việc quản lý trở nên dễ dàng hơn. Loại bỏ những công việc thủ công phức tạp dễ gây sai số.
