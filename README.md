@@ -1,11 +1,11 @@
 
-# Project Name: 
+# Project Name 
  Ứng dụng quản lí quán Coffee 
 
-# Introduce my project:
+# Introduce my project
  Một ứng dụng công nghệ thông tin giúp công việc quản lý trở nên dễ dàng hơn. Loại bỏ những công việc thủ công phức tạp dễ gây sai số.
 
-# Prerequisites : 
+# Prerequisites 
 
 - Trước khi run project bạn phải đảm bảo các yêu cầu sau :
     + Cài đặt android studio 
